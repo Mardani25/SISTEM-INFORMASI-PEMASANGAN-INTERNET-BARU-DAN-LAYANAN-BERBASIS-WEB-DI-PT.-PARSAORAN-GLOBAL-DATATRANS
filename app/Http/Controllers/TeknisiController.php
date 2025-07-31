@@ -13,18 +13,18 @@ use App\Models\User;
 class TeknisiController extends Controller
 {
     // Menampilkan jadwal teknisi berdasarkan tanggal
-public function lihatJadwal(Request $request)
-{
-    $tanggal = $request->input('tanggal', date('Y-m-d'));
+    public function lihatJadwal(Request $request)
+    {
+        $tanggal = $request->input('tanggal', date('Y-m-d'));
 
-    $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.user')
-        ->where('id_user', Auth::id())
-        ->whereDate('tanggal', $tanggal)
-        ->orderBy('waktu')
-        ->paginate(10);
+        $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.user')
+            ->where('id_user', Auth::id())
+            ->whereDate('tanggal', $tanggal)
+            ->orderBy('waktu')
+            ->paginate(10);
 
-    return view('teknisi.jadwal', compact('jadwals', 'tanggal'));
-}
+        return view('teknisi.jadwal', compact('jadwals', 'tanggal'));
+    }
 
     // Menampilkan detail pemesanan
     public function detailPemesanan($id)

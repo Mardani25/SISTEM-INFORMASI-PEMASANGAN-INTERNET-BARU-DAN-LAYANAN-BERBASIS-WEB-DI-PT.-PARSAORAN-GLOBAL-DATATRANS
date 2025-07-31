@@ -91,14 +91,13 @@ class AdminController extends Controller
     // ================== JADWAL TEKNISI ==================
     public function jadwalIndex()
     {
-        $jadwals = JadwalTeknisi::with(['user', 'pemesanan'])->paginate(10);
+        $jadwals = JadwalTeknisi::with(['teknisi', 'pemesanan'])->paginate(10);
         return view('admin.teknisi.jadwal_index', compact('jadwals'));
     }
 
     public function jadwalCreate()
     {
         $teknisis = User::where('role', 'teknisi')->get();
-
         $pemesanans = Pemesanan::with(['user', 'layanan'])
             ->whereHas('pembayaran', function ($query) {
                 $query->where('status_pembayaran', 'settlement');
@@ -107,7 +106,6 @@ class AdminController extends Controller
 
         return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
     }
-
 
     public function jadwalStore(Request $request)
     {
@@ -119,17 +117,16 @@ class AdminController extends Controller
         ]);
 
         JadwalTeknisi::create([
-            'id_user' => $request->id_teknisi,
+            'id_teknisi' => $request->id_teknisi,
             'id_pemesanan' => $request->id_pemesanan,
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
         ]);
 
         Notification::create([
-            'id_user' => $request->id_teknisi, // ← perbaikan di sini
+            'id_user' => $request->id_teknisi,
             'message' => 'Jadwal baru telah dibuat untuk Anda pada tanggal ' . $request->tanggal . ' pukul ' . $request->waktu,
         ]);
-
 
         return redirect()->route('admin.teknisi.jadwal.index')->with('success', 'Jadwal teknisi berhasil dibuat');
     }

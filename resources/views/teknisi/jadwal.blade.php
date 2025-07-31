@@ -42,51 +42,52 @@
                             <th>Foto Bukti</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($jadwals as $jadwal)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
-                                <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
-                                <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
-                                <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
-                                
-                                <!-- Status Kehadiran -->
-                                <td>
-                                    <form action="{{ route('teknisi.updateKehadiran', $jadwal->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <select name="status_kehadiran" class="form-control form-control-sm" onchange="this.form.submit()">
-                                            <option value="belum_hadir" {{ $jadwal->status_kehadiran == 'belum_hadir' ? 'selected' : '' }}>
-                                                Belum Hadir
-                                            </option>
-                                            <option value="hadir" {{ $jadwal->status_kehadiran == 'hadir' ? 'selected' : '' }}>
-                                                Hadir / Selesai
-                                            </option>
-                                        </select>
-                                    </form>
-                                </td>
+<tbody>
+@foreach($jadwals as $jadwal)
+    <tr>
+        <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
+        <td>{{ $jadwal->pemesanan->pelanggan->user->name ?? '-' }}</td>
+        <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
+        <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
+        
+        <!-- Status Kehadiran -->
+        <td>
+            <form action="{{ route('teknisi.updateKehadiran', $jadwal->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <select name="status_kehadiran" class="form-control form-control-sm" onchange="this.form.submit()">
+                    <option value="belum_hadir" {{ $jadwal->status_kehadiran == 'belum_hadir' ? 'selected' : '' }}>
+                        Belum Hadir
+                    </option>
+                    <option value="hadir" {{ $jadwal->status_kehadiran == 'hadir' ? 'selected' : '' }}>
+                        Hadir / Selesai
+                    </option>
+                </select>
+            </form>
+        </td>
 
-                                <!-- Upload/Lihat Bukti -->
-                                <td>
-                                    @if ($jadwal->status_kehadiran == 'hadir' && !$jadwal->bukti_foto)
-                                        <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="mb-2">
-                                                <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
-                                        </form>
-                                    @elseif ($jadwal->bukti_foto)
-                                        <a href="{{ asset('storage/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">
-                                            Lihat Bukti
-                                        </a>
-                                    @else
-                                        <span class="text-muted">Belum ada</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+        <!-- Upload/Lihat Bukti -->
+        <td>
+            @if ($jadwal->status_kehadiran == 'hadir' && !$jadwal->bukti_foto)
+                <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-2">
+                        <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
+                </form>
+            @elseif ($jadwal->bukti_foto)
+                <a href="{{ asset('storage/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">
+                    Lihat Bukti
+                </a>
+            @else
+                <span class="text-muted">Belum ada</span>
+            @endif
+        </td>
+    </tr>
+@endforeach
+</tbody>
+
                 </table>
             </div>
         @endif

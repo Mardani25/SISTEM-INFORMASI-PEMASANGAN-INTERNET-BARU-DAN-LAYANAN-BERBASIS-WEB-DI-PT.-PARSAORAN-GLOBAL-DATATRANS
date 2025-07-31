@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Models\Pemesanan;
 use App\Models\Pembayaran;
@@ -16,40 +17,34 @@ class PemesananController extends Controller
         $pemesanans = Pemesanan::with('user', 'layanan')->paginate(10);
         $pemesanan = $pemesanans->first();
 
-        // Ambil pembayaran yang sesuai dengan pemesanan
         $pembayaranIds = $pemesanans->pluck('id');
         $pembayaran = Pembayaran::whereIn('id_pemesanan', $pembayaranIds)->get();
 
         return view('pemesanan.index', compact('pemesanans', 'layanans', 'pemesanan', 'pembayaran'));
     }
 
-public function indexte()
-{
-    $userId = Auth::id();
+    public function indexte()
+    {
+        $userId = Auth::id();
+        $user = Auth::user();
 
-    // Pastikan user yang login memiliki role pelanggan
-    $user = Auth::user();
-    if ($user->role !== 'pelanggan') {
-        return redirect()->back()->with('error', 'Hanya pelanggan yang dapat mengakses halaman ini.');
+        if ($user->role !== 'pelanggan') {
+            return redirect()->back()->with('error', 'Hanya pelanggan yang dapat mengakses halaman ini.');
+        }
+
+        $pemesanans = Pemesanan::with([
+            'user',
+            'layanan',
+            'jadwalTeknisis.teknisi.user'
+        ])->where('id_user', $userId)->get();
+
+        $pemesanan = $pemesanans->first();
+
+        $pembayaranIds = $pemesanans->pluck('id');
+        $pembayarans = Pembayaran::whereIn('id_pemesanan', $pembayaranIds)->get();
+
+        return view('pemesanan.indexte', compact('pemesanans', 'pemesanan', 'pembayarans'));
     }
-
-    // Ambil data pemesanan milik pelanggan yang sedang login
-    $pemesanans = Pemesanan::with([
-        'user',
-        'layanan',
-        'jadwalTeknisis.teknisi.user'
-    ])->whereHas('user', function ($query) {
-        $query->where('role', 'pelanggan');
-    })->where('id_user', $userId)->get();
-
-    $pemesanan = $pemesanans->first();
-
-    $pembayaranIds = $pemesanans->pluck('id');
-    $pembayarans = Pembayaran::whereIn('id_pemesanan', $pembayaranIds)->get();
-
-    return view('pemesanan.indexte', compact('pemesanans', 'pemesanan', 'pembayarans'));
-}
-
 
     public function verifikasi($id)
     {

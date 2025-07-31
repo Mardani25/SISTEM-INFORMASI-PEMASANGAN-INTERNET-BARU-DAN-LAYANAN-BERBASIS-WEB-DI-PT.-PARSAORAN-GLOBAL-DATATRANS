@@ -66,7 +66,11 @@
         </div>
 
         <div class="text-center">
+<<<<<<< HEAD
             <a href="/pelanggan/dashboard" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
+=======
+            <a href="/dashboard" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
+>>>>>>> 26740fb (sistem-pemesanan)
         </div>
     </div>
 </div>

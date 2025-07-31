@@ -89,20 +89,22 @@
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="id_pemesanan" class="form-label">Pemesanan</label>
-                <select id="id_pemesanan" name="id_pemesanan" class="form-select" required>
-                    <option value="">Pilih Pemesanan</option>
-                    @foreach ($pemesanans as $pemesanan)
-                        <option value="{{ $pemesanan->id }}">
-                            {{ $pemesanan->id }} - {{ $pemesanan->user->name ?? 'Tanpa Nama' }} | 
-                            {{ $pemesanan->layanan->nama_layanan ?? '-' }} | 
-                            Rp {{ number_format($pemesanan->layanan->harga ?? 0, 0, ',', '.') }} | 
-                            Jadwal: {{ \Carbon\Carbon::parse($pemesanan->jadwal_pemasangan)->format('Y-m-d') ?? '-' }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+<div class="mb-3">
+    <label for="id_pemesanan" class="form-label">Pemesanan</label>
+    <select id="id_pemesanan" name="id_pemesanan" class="form-select" required>
+        <option value="">Pilih Pemesanan</option>
+        @foreach ($pemesanans as $pemesanan)
+            <option value="{{ $pemesanan->id }}">
+                {{ $pemesanan->id }} - 
+                {{ $pemesanan->user->name ?? $pemesanan->pelanggan->name ?? 'Tanpa Nama' }} |
+                {{ $pemesanan->layanan->nama_layanan ?? '-' }} |
+                Rp {{ number_format($pemesanan->layanan->harga ?? 0, 0, ',', '.') }} |
+                Jadwal: {{ \Carbon\Carbon::parse($pemesanan->jadwal_pemasangan)->format('Y-m-d') ?? '-' }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
             <div class="mb-3">
                 <label for="tanggal" class="form-label">Tanggal</label>
