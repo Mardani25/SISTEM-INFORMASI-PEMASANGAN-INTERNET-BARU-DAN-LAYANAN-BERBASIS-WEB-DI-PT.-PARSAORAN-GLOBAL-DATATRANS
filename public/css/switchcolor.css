@@ -1,0 +1,45 @@
+#color-container {
+    display: none;
+    min-width: 250px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.color-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.color-box:hover {
+    border: 2px solid #333;
+}
+
+.dropdown-menu {
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 15px;
+}
+
+.dropdown-header {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav-item {
+    margin-right: 10px;
+}
+
+:root {
+    --sidebar-bg-color: #1919ff; /* Warna default */
+}
+
+.sidebar {
+    background-color: var(--sidebar-bg-color);
+}
+
+.submenu {
+    background-color: var(--sidebar-bg-color);
+}
