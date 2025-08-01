@@ -54,7 +54,7 @@ public function simpan(Request $request)
 
     // Ambil data pemesanan (untuk informasi tambahan di notifikasi)
     $pemesanan = Pemesanan::with('layanan')->find($request->id);
-
+    $pemesanan = Pemesanan::where('status_pembayaran', 'lunas')->get();
     // Kirim notifikasi ke semua admin
     $admins = User::where('role', 'admin')->get();
     foreach ($admins as $admin) {
