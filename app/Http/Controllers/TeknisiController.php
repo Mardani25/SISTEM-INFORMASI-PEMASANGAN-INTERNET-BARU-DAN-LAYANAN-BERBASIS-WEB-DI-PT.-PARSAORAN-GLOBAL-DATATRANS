@@ -17,7 +17,7 @@ public function lihatJadwal(Request $request)
 {
     $tanggal = $request->input('tanggal', date('Y-m-d'));
 
-    $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.pelanggan')
+    $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.pelanggan.user')
         ->where('id_user', Auth::id())
         ->whereDate('tanggal', $tanggal)
         ->orderBy('waktu')
