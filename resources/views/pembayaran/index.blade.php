@@ -66,7 +66,7 @@
         </div>
 
         <div class="text-center">
-            <a href="/dashboard" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
+            <a href="/dashboard/pelanggan" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
         </div>
     </div>
 </div>
