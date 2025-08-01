@@ -119,14 +119,14 @@ class AdminController extends Controller
         ]);
 
         JadwalTeknisi::create([
-            'id_teknisi' => $request->id_teknisi,
+            'id_user' => $request->id_user,
             'id_pemesanan' => $request->id_pemesanan,
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
         ]);
 
         Notification::create([
-            'id_user' => $request->id_teknisi,
+            'id_user' => $request->id_user,
             'message' => 'Jadwal baru telah dibuat untuk Anda pada tanggal ' . $request->tanggal . ' pukul ' . $request->waktu,
         ]);
 
