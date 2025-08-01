@@ -20,9 +20,4 @@ class Pembayaran extends Model
     {
         return $this->belongsTo(Pemesanan::class, 'id_pemesanan');
     }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user'); // Sesuaikan foreign key-nya kalau berbeda
-    }
 }
