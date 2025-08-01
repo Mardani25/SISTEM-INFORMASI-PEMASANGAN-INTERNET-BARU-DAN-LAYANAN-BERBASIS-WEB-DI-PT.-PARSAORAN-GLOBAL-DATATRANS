@@ -95,7 +95,7 @@
                     <option value="">Pilih Pemesanan</option>
                     @foreach ($pemesanans as $pemesanan)
                         <option value="{{ $pemesanan->id }}">
-                            {{ $pemesanan->id }} - {{ $pemesanan->pelanggan->name ?? 'Tanpa Nama' }}
+                            {{ $pemesanan->id }} - {{ $pemesanan->user->name ?? 'Tanpa Nama' }}
                         </option>
                     @endforeach
                 </select>
