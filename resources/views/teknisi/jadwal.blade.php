@@ -46,7 +46,7 @@
                         @foreach($jadwals as $jadwal)
                             <tr>
                                 <td>{{ $jadwal->waktu }}</td>
-                                <td>{{ $jadwal->pemesanan->pelanggan->user->name ?? '-' }}</td>
+                                <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
                                 <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
                                 <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
                                 
