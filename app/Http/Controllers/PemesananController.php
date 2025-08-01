@@ -23,23 +23,33 @@ class PemesananController extends Controller
         return view('pemesanan.index', compact('pemesanans', 'layanans', 'pemesanan', 'pembayaran'));
     }
 
-    public function indexte()
-    {
-        $userId = Auth::id();
+public function indexte()
+{
+    $userId = Auth::id();
 
-        $pemesanans = Pemesanan::with([
-            'user',
-            'layanan',
-            'jadwalTeknisis.teknisi.user'
-        ])->where('id_user', $userId)->get();
-
-        $pemesanan = $pemesanans->first();
-
-        $pembayaranIds = $pemesanans->pluck('id');
-        $pembayarans = Pembayaran::whereIn('id_pemesanan', $pembayaranIds)->get();
-
-        return view('pemesanan.indexte', compact('pemesanans', 'pemesanan', 'pembayarans'));
+    // Pastikan user yang login memiliki role pelanggan
+    $user = Auth::user();
+    if ($user->role !== 'pelanggan') {
+        return redirect()->back()->with('error', 'Hanya pelanggan yang dapat mengakses halaman ini.');
     }
+
+    // Ambil data pemesanan milik pelanggan yang sedang login
+    $pemesanans = Pemesanan::with([
+        'user',
+        'layanan',
+        'jadwalTeknisis.teknisi.user'
+    ])->whereHas('user', function ($query) {
+        $query->where('role', 'pelanggan');
+    })->where('id_user', $userId)->get();
+
+    $pemesanan = $pemesanans->first();
+
+    $pembayaranIds = $pemesanans->pluck('id');
+    $pembayarans = Pembayaran::whereIn('id_pemesanan', $pembayaranIds)->get();
+
+    return view('pemesanan.indexte', compact('pemesanans', 'pemesanan', 'pembayarans'));
+}
+
 
     public function verifikasi($id)
     {

@@ -46,4 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Complain::class, 'id_user');
     }
+
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'id_pemesanan');
+    }
+
 }

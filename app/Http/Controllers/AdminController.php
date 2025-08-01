@@ -99,13 +99,16 @@ public function jadwalCreate()
 {
     $teknisis = User::where('role', 'teknisi')->get();
 
-    // Ambil hanya pemesanan yang sudah dibayar (lunas)
-    $pemesanans = Pemesanan::with('pelanggan')
-        ->where('status_pembayaran', 'lunas')
+    // Hanya ambil pemesanan yang sudah dibayar (status_pembayaran = 'lunas')
+    $pemesanans = Pemesanan::with(['user', 'pembayaran'])
+        ->whereHas('pembayaran', function ($query) {
+            $query->where('status_pembayaran', 'lunas');
+        })
         ->get();
 
     return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
 }
+
 
 
     public function jadwalStore(Request $request)
