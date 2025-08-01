@@ -52,11 +52,7 @@ public function simpan(Request $request)
         'tanggal_bayar' => now(),
     ]);
 
-    // Tandai bahwa pemesanan ini sudah dibayar (asumsikan kolom 'status_pembayaran' ada di tabel 'pemesanans')
-    Pemesanan::where('id', $request->id)
-        ->update(['status_pembayaran' => 'lunas']);
-
-    // Ambil satu data pemesanan untuk informasi notifikasi
+    // Ambil data pemesanan (untuk informasi tambahan di notifikasi)
     $pemesanan = Pemesanan::with('layanan')->find($request->id);
 
     // Kirim notifikasi ke semua admin
@@ -73,7 +69,6 @@ public function simpan(Request $request)
 
     return response()->json(['redirect' => url('/pembayaran/sukses/' . $request->id)]);
 }
-
 
     
     public function sukses($pemesananId)

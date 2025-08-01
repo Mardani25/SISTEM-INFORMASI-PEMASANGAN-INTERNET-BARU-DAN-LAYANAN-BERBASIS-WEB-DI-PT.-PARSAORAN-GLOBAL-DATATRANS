@@ -95,21 +95,12 @@ class AdminController extends Controller
         return view('admin.teknisi.jadwal_index', compact('jadwals'));
     }
 
-public function jadwalCreate()
-{
-    $teknisis = User::where('role', 'teknisi')->get();
-
-    // Hanya ambil pemesanan yang sudah dibayar (status_pembayaran = 'lunas')
-    $pemesanans = Pemesanan::with(['user', 'pembayaran'])
-        ->whereHas('pembayaran', function ($query) {
-            $query->where('status_pembayaran', 'lunas');
-        })
-        ->get();
-
-    return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
-}
-
-
+    public function jadwalCreate()
+    {
+        $teknisis = User::where('role', 'teknisi')->get();
+        $pemesanans = Pemesanan::all();
+        return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
+    }
 
     public function jadwalStore(Request $request)
     {
