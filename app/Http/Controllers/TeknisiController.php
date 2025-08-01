@@ -17,7 +17,7 @@ public function lihatJadwal(Request $request)
 {
     $tanggal = $request->input('tanggal', date('Y-m-d'));
 
-    $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.pelanggan.user')
+    $jadwals = JadwalTeknisi::with('pemesanan.layanan', 'pemesanan.user')
         ->where('id_user', Auth::id())
         ->whereDate('tanggal', $tanggal)
         ->orderBy('waktu')
@@ -29,7 +29,7 @@ public function lihatJadwal(Request $request)
     // Menampilkan detail pemesanan
     public function detailPemesanan($id)
     {
-        $pemesanan = Pemesanan::with(['pelanggan.user', 'layanan'])->findOrFail($id);
+        $pemesanan = Pemesanan::with(['user', 'layanan'])->findOrFail($id);
         return view('teknisi.detail_pemesanan', compact('pemesanan'));
     }
 
