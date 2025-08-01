@@ -95,7 +95,10 @@
                     <option value="">Pilih Pemesanan</option>
                     @foreach ($pemesanans as $pemesanan)
                         <option value="{{ $pemesanan->id }}">
-                            {{ $pemesanan->id }} - {{ $pemesanan->user->name ?? 'Tanpa Nama' }}
+                            {{ $pemesanan->id }} - {{ $pemesanan->user->name ?? 'Tanpa Nama' }} | 
+                            {{ $pemesanan->layanan->nama_layanan ?? '-' }} | 
+                            Rp {{ number_format($pemesanan->layanan->harga ?? 0, 0, ',', '.') }} | 
+                            Jadwal: {{ \Carbon\Carbon::parse($pemesanan->jadwal_pemasangan)->format('Y-m-d') ?? '-' }}
                         </option>
                     @endforeach
                 </select>

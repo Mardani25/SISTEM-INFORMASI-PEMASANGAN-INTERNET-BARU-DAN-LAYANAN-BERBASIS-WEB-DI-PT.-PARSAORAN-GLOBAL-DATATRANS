@@ -98,9 +98,16 @@ class AdminController extends Controller
     public function jadwalCreate()
     {
         $teknisis = User::where('role', 'teknisi')->get();
-        $pemesanans = Pemesanan::all();
+
+        $pemesanans = Pemesanan::with(['user', 'layanan'])
+            ->whereHas('pembayaran', function ($query) {
+                $query->where('status_pembayaran', 'settlement');
+            })
+            ->get();
+
         return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
     }
+
 
     public function jadwalStore(Request $request)
     {
