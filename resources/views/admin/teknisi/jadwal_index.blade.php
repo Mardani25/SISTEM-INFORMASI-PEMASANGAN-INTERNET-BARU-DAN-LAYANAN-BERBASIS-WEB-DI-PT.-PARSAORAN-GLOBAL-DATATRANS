@@ -90,13 +90,13 @@
           @forelse ($jadwals as $index => $jadwal)
           <tr>
             <td class="text-center">{{ ($jadwals->currentPage() - 1) * $jadwals->perPage() + $index + 1 }}</td>
-            <td>{{ $jadwal->teknisi->name ?? '-' }}</td>
+            <td>{{ $jadwal->user->name ?? '-' }}</td>
             <td class="text-center">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
             <td class="text-center">{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
-            <td>{{ $jadwal->pemesanan->pelanggan->name ?? '-' }}</td>
-            <td>{{ $jadwal->pemesanan->pelanggan->alamat ?? '-' }}</td>
-            <td>{{ $jadwal->pemesanan->pelanggan->telepon ?? '-' }}</td>
-            <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->alamat ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->telepon ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user ?? '-' }}</td>
             <td class="text-center">
               <form action="{{ route('teknisi.updateKehadiran', $jadwal->id) }}" method="POST" class="m-0 p-0">
                 @csrf
