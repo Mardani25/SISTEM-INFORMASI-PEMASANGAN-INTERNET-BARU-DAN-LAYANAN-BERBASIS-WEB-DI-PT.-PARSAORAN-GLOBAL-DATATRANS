@@ -126,9 +126,10 @@ class AdminController extends Controller
         ]);
 
         Notification::create([
-            'id_user' => $request->id_user,
+            'id_user' => $request->id_teknisi, // ← perbaikan di sini
             'message' => 'Jadwal baru telah dibuat untuk Anda pada tanggal ' . $request->tanggal . ' pukul ' . $request->waktu,
         ]);
+
 
         return redirect()->route('admin.teknisi.jadwal.index')->with('success', 'Jadwal teknisi berhasil dibuat');
     }
