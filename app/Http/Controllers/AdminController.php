@@ -119,7 +119,7 @@ class AdminController extends Controller
         ]);
 
         JadwalTeknisi::create([
-            'id_user' => $request->id_user,
+            'id_user' => $request->id_teknisi,
             'id_pemesanan' => $request->id_pemesanan,
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
