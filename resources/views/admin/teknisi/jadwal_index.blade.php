@@ -90,7 +90,7 @@
           @forelse ($jadwals as $index => $jadwal)
           <tr>
             <td class="text-center">{{ ($jadwals->currentPage() - 1) * $jadwals->perPage() + $index + 1 }}</td>
-            <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
+            <td>{{ optional($jadwal->pemesanan->pelanggan->user)->name ?? '-' }}</td>
             <td class="text-center">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
             <td class="text-center">{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
             <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
