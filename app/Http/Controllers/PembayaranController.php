@@ -14,32 +14,33 @@ use App\Models\User;
 
 class PembayaranController extends Controller
 {
-    public function index($pemesananId)
-    {
-        $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
+public function index($pemesananId)
+{
+    $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-        // Konfigurasi Midtrans
-        Config::$serverKey = config('midtrans.serverKey');
-        Config::$isProduction = config('midtrans.isProduction');
-        Config::$isSanitized = config('midtrans.isSanitized');
-        Config::$is3ds = config('midtrans.is3ds');
+    // Konfigurasi Midtrans
+    Config::$serverKey = config('midtrans.serverKey');
+    Config::$clientKey = config('midtrans.clientKey'); // ← tambahkan ini!
+    Config::$isProduction = config('midtrans.isProduction');
+    Config::$isSanitized = config('midtrans.isSanitized');
+    Config::$is3ds = config('midtrans.is3ds');
 
-        // Buat Snap Token
-        $params = [
-            'transaction_details' => [
-                'order_id' => 'ORDER-' . $pemesanan->id . '-' . time(),
-                'gross_amount' => $pemesanan->layanan->harga,
-            ],
-            'customer_details' => [
-                'first_name' => 'Pelanggan',
-                'email' => 'pelanggan@example.com',
-            ],
-        ];
+    // Buat Snap Token
+    $params = [
+        'transaction_details' => [
+            'order_id' => 'ORDER-' . $pemesanan->id . '-' . time(),
+            'gross_amount' => $pemesanan->layanan->harga,
+        ],
+        'customer_details' => [
+            'first_name' => 'Pelanggan',
+            'email' => 'pelanggan@example.com',
+        ],
+    ];
 
-        $snapToken = Snap::getSnapToken($params);
+    $snapToken = Snap::getSnapToken($params);
 
-        return view('pembayaran.index', compact('pemesanan', 'snapToken'));
-    }
+    return view('pembayaran.index', compact('pemesanan', 'snapToken'));
+}
 
 
 public function simpan(Request $request)
