@@ -1,0 +1,29 @@
+[33m25a647c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m fix: remove midtrans secret key from config
+[33m51936ca[m fix: remove midtrans.php and ignore it from Git
+[33m26b4c31[m midtrans chhange
+[33mc8119bb[m[33m ([m[1;31morigin/main[m[33m)[m jadwal waktu
+[33m93cbb8f[m teknisicontroller lihatjadwal detail pemesanan
+[33mc7e1d25[m indexnnew.php change
+[33m11ab335[m indexnnew.php change
+[33m2c9235d[m jadwalcreate change
+[33m49f34f0[m jadwal store change
+[33m830711e[m jadwl teknisi
+[33m2d89da4[m jadwalcreate change
+[33m41d6500[m jadwal index change
+[33m004ba34[m jadwal index change
+[33m277a2e5[m jadwalcreate change
+[33m886a00b[m indexnnew.php change
+[33m7f1f143[m indexnnew.php change
+[33m92c34c7[m indexnnew.php change
+[33m03f32be[m pembbayaran dashboard change
+[33md8ba3bb[m pembbayaran dashboard change
+[33m88b6ce7[m pembbayaran dashboard change
+[33m5a828bf[m index.php change
+[33mee30415[m indexnnew.php change
+[33m2d7f701[m index.php change
+[33mc25847d[m indexnnew.php change
+[33mab73629[m index.php change
+[33m3987ae9[m indexnnew.php change
+[33m38025f9[m memindahkan htaccesstobotfaviconindex
+[33m5a2444d[m index.php change
+[33m07c72fb[m sistem-pemesanan
