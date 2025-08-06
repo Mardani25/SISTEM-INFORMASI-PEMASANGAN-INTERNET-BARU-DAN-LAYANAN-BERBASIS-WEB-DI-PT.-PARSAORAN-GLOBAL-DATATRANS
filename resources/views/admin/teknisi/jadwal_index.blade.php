@@ -127,7 +127,7 @@
           <button type="submit" class="btn btn-sm btn-primary w-100">Upload</button>
         </form>
       @elseif ($jadwal->bukti_foto)
-        <a href="{{ asset('storage/app/private/public/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">Lihat</a>
+<img src="{{ asset('storage/bukti_foto/' . $jadwal->bukti_foto) }}" alt="Bukti Foto" width="200">
       @else
         <span class="text-muted">Belum ada</span>
       @endif
