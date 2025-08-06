@@ -71,59 +71,54 @@ class TeknisiController extends Controller
 public function uploadBukti(Request $request, $id)
 {
     try {
-        $teknisi = Auth::user(); // ✅ Tidak pakai relasi teknisi
-        dd($teknisi); // 🔍 Cek user login
-
+        $user = Auth::user(); // Mengambil user yang sedang login
         $jadwal = JadwalTeknisi::findOrFail($id);
-        dd($jadwal); // 🔍 Cek jadwal
 
-        if (!$teknisi || $jadwal->id_teknisi !== $teknisi->id) {
-            dd('AKSES DITOLAK');
+        // Pastikan user yang login adalah teknisi yang sesuai dengan jadwal
+        if ($jadwal->id_teknisi !== $user->id) {
             return back()->with('error', 'Akses ditolak. Anda bukan teknisi yang ditugaskan.');
         }
 
+        // Validasi file gambar
         $request->validate([
             'bukti_foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        dd('VALIDASI OK');
 
+        // Pastikan file dikirim
         if (!$request->hasFile('bukti_foto')) {
-            dd('TIDAK ADA FILE');
             return back()->with('error', 'Tidak ada file yang dikirim.');
         }
 
         $file = $request->file('bukti_foto');
-        dd($file);
 
+        // Pastikan file valid
         if (!$file->isValid()) {
-            dd('FILE TIDAK VALID');
             return back()->with('error', 'File tidak valid.');
         }
 
+        // Simpan file ke storage/app/public/bukti_foto
         $filename = time() . '_' . $file->getClientOriginalName();
         $path = $file->storeAs('bukti_foto', $filename, 'public');
-        dd($path);
 
         if (!$path) {
-            dd('GAGAL SIMPAN');
             return back()->with('error', 'Gagal menyimpan file.');
         }
 
+        // Update data jadwal teknisi
         $jadwal->update([
             'bukti_foto' => $filename,
             'status_kehadiran' => 'hadir'
         ]);
-        dd('UPDATE DB OK');
 
-        $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . Auth::user()->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
-        dd('NOTIFIKASI TERKIRIM');
+        // Kirim notifikasi ke admin
+        $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . $user->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
 
-        return back()->with('success', 'Bukti foto berhasil diupload ke: ' . $path);
+        return back()->with('success', 'Bukti foto berhasil diupload.');
     } catch (\Exception $e) {
-        dd('EXCEPTION: ' . $e->getMessage());
         return back()->with('error', 'Gagal upload: ' . $e->getMessage());
     }
 }
+
 
 
 
