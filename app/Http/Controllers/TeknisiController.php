@@ -71,8 +71,8 @@ class TeknisiController extends Controller
 public function uploadBukti(Request $request, $id)
 {
     try {
-        dd('MASUK METHOD'); // 🔍 Cek awal fungsi terpanggil atau tidak
-
+        $teknisi = Auth::user()->teknisi;
+        dd($teknisi);
         $teknisi = Auth::user()->teknisi;
         dd($teknisi); // 🔍 Apakah teknisi ditemukan?
 
