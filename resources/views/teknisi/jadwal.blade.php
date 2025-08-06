@@ -69,13 +69,13 @@
             <!-- Upload/Lihat Bukti -->
             <td>
                 @if ($jadwal->status_kehadiran == 'hadir' && !$jadwal->bukti_foto)
-                    <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-2">  
-                            <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
-                    </form>
+                        <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-2">  
+                                <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
+                        </form>
                 @elseif ($jadwal->bukti_foto)
                     <a href="{{ asset('storage/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">
                         Lihat Bukti
