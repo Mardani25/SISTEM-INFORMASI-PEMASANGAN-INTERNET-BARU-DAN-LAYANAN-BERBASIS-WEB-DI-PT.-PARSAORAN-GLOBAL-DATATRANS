@@ -91,7 +91,7 @@ class AdminController extends Controller
     // ================== JADWAL TEKNISI ==================
     public function jadwalIndex()
     {
-        $jadwals = JadwalTeknisi::with(['teknisi', 'pemesanan'])->paginate(10);
+        $jadwals = JadwalTeknisi::with(['user   ', 'pemesanan'])->paginate(10);
         return view('admin.teknisi.jadwal_index', compact('jadwals'));
     }
 
@@ -107,29 +107,30 @@ class AdminController extends Controller
         return view('admin.teknisi.jadwal_create', compact('teknisis', 'pemesanans'));
     }
 
-    public function jadwalStore(Request $request)
-    {
-        $request->validate([
-            'id_teknisi' => 'required|exists:users,id',
-            'id_pemesanan' => 'required|exists:pemesanans,id',
-            'tanggal' => 'required|date|after_or_equal:today',
-            'waktu' => 'required|date_format:H:i',
-        ]);
+public function jadwalStore(Request $request)
+{
+    $request->validate([
+        'id_teknisi' => 'required|exists:users,id',
+        'id_pemesanan' => 'required|exists:pemesanans,id',
+        'tanggal' => 'required|date|after_or_equal:today',
+        'waktu' => 'required|date_format:H:i',
+    ]);
 
-        JadwalTeknisi::create([
-            'id_teknisi' => $request->id_teknisi,
-            'id_pemesanan' => $request->id_pemesanan,
-            'tanggal' => $request->tanggal,
-            'waktu' => $request->waktu,
-        ]);
+    JadwalTeknisi::create([
+        'id_user' => $request->id_teknisi, // ✅ mapping ke kolom id_user
+        'id_pemesanan' => $request->id_pemesanan,
+        'tanggal' => $request->tanggal,
+        'waktu' => $request->waktu,
+    ]);
 
-        Notification::create([
-            'id_user' => $request->id_teknisi,
-            'message' => 'Jadwal baru telah dibuat untuk Anda pada tanggal ' . $request->tanggal . ' pukul ' . $request->waktu,
-        ]);
+    Notification::create([
+        'id_user' => $request->id_teknisi,
+        'message' => 'Jadwal baru telah dibuat untuk Anda pada tanggal ' . $request->tanggal . ' pukul ' . $request->waktu,
+    ]);
 
-        return redirect()->route('admin.teknisi.jadwal.index')->with('success', 'Jadwal teknisi berhasil dibuat');
-    }
+    return redirect()->route('admin.teknisi.jadwal.index')->with('success', 'Jadwal teknisi berhasil dibuat');
+}
+
 
     public function jadwalDestroy(JadwalTeknisi $jadwal)
     {
