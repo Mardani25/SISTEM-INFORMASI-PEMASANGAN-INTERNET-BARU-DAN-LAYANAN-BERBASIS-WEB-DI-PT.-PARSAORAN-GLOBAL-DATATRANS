@@ -70,54 +70,20 @@ class TeknisiController extends Controller
     // Upload bukti foto kehadiran
 public function uploadBukti(Request $request, $id)
 {
-    try {
-        $user = Auth::user(); // Mengambil user yang sedang login
-        $jadwal = JadwalTeknisi::findOrFail($id);
+    $jadwal = JadwalTeknisi::findOrFail($id);
 
-        // Pastikan user yang login adalah teknisi yang sesuai dengan jadwal
-        if ($jadwal->id_teknisi !== $user->id) {
-            return back()->with('error', 'Akses ditolak. Anda bukan teknisi yang ditugaskan.');
-        }
-
-        // Validasi file gambar
-        $request->validate([
-            'bukti_foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        // Pastikan file dikirim
-        if (!$request->hasFile('bukti_foto')) {
-            return back()->with('error', 'Tidak ada file yang dikirim.');
-        }
-
+    if ($request->hasFile('bukti_foto')) {
         $file = $request->file('bukti_foto');
+        $filename = time().'_'.$file->getClientOriginalName();
+        $file->storeAs('public/bukti_foto', $filename);
 
-        // Pastikan file valid
-        if (!$file->isValid()) {
-            return back()->with('error', 'File tidak valid.');
-        }
-
-        // Simpan file ke storage/app/public/bukti_foto
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('bukti_foto', $filename, 'public');
-
-        if (!$path) {
-            return back()->with('error', 'Gagal menyimpan file.');
-        }
-
-        // Update data jadwal teknisi
-        $jadwal->update([
-            'bukti_foto' => $filename,
-            'status_kehadiran' => 'hadir'
-        ]);
-
-        // Kirim notifikasi ke admin
-        $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . $user->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
-
-        return back()->with('success', 'Bukti foto berhasil diupload.');
-    } catch (\Exception $e) {
-        return back()->with('error', 'Gagal upload: ' . $e->getMessage());
+        $jadwal->bukti_foto = $filename;
+        $jadwal->save();
     }
+
+    return redirect()->back()->with('success', 'Bukti foto berhasil diupload');
 }
+
 
 
 
