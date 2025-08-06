@@ -91,7 +91,7 @@ class AdminController extends Controller
     // ================== JADWAL TEKNISI ==================
     public function jadwalIndex()
     {
-        $jadwals = JadwalTeknisi::with(['user', 'pemesanan'])->paginate(10);
+        $jadwals = JadwalTeknisi::with(['teknisi', 'pemesanan'])->paginate(10);
         return view('admin.teknisi.jadwal_index', compact('jadwals'));
     }
 
