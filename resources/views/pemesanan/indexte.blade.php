@@ -130,20 +130,23 @@
             <th>Status</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach ($pembayarans as $pembayaran)
-            @php
-                $pemesan = $pembayaran->pemesanan; // Ambil relasi pemesanan dari pembayaran
-            @endphp
-            <tr>
-                <td>{{ $pemesan->id }}</td>
-                <td>{{ $pemesan->pelanggan->user->name ?? 'Tidak Tersedia' }}</td>
-                <td>{{ $pemesan->pelanggan->user->telepon ?? '-' }}</td>
-                <td>{{ $pemesan->pelanggan->user->alamat ?? '-' }}</td>
-                <td>{{ $pemesan->layanan->nama_layanan }}</td>
-                <td>Rp {{ number_format($pemesan->layanan->harga, 0, ',', '.') }}</td>
-                <td>{{ $pemesan->keterangan ?? '-' }}</td>
-                <td>
+<tbody>
+    @foreach ($pembayarans as $pembayaran)
+        @php
+            $pemesan = $pembayaran->pemesanan;
+            $pelanggan = $pemesan->pelanggan ?? null;
+            $user = $pelanggan->user ?? null;
+            $layanan = $pemesan->layanan ?? null;
+        @endphp
+        <tr>
+            <td>{{ $pemesan->id ?? '-' }}</td>
+            <td>{{ $user->name ?? 'Tidak Tersedia' }}</td>
+            <td>{{ $user->telepon ?? '-' }}</td>
+            <td>{{ $user->alamat ?? '-' }}</td>
+            <td>{{ $layanan->nama_layanan ?? '-' }}</td>
+            <td>Rp {{ number_format($layanan->harga ?? 0, 0, ',', '.') }}</td>
+            <td>{{ $pemesan->keterangan ?? '-' }}</td>
+            <td>
                 <span class="badge" style="
                     padding: 5px 10px;
                     border-radius: 4px;
@@ -155,11 +158,43 @@
                 ">
                     {{ ucfirst($pemesan->status) }}
                 </span>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+<tbody>
+    @foreach ($pembayarans as $pembayaran)
+        @php
+            $pemesan = $pembayaran->pemesanan;
+            $pelanggan = $pemesan->pelanggan ?? null;
+            $user = $pelanggan->user ?? null;
+            $layanan = $pemesan->layanan ?? null;
+        @endphp
+        <tr>
+            <td>{{ $pemesan->id ?? '-' }}</td>
+            <td>{{ $user->name ?? 'Tidak Tersedia' }}</td>
+            <td>{{ $user->telepon ?? '-' }}</td>
+            <td>{{ $user->alamat ?? '-' }}</td>
+            <td>{{ $layanan->nama_layanan ?? '-' }}</td>
+            <td>Rp {{ number_format($layanan->harga ?? 0, 0, ',', '.') }}</td>
+            <td>{{ $pemesan->keterangan ?? '-' }}</td>
+            <td>
+                <span class="badge" style="
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    background-color: 
+                        {{ $pemesan->status == 'completed' ? '#28a745' : 
+                        ($pemesan->status == 'confirmed' ? '#007bff' : 
+                        ($pemesan->status == 'pending' ? '#ffc107' : '#dc3545')) }};
+                    color: white;
+                ">
+                    {{ ucfirst($pemesan->status) }}
+                </span>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
 
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
 </table>
 
         </div>

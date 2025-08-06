@@ -32,9 +32,9 @@
                 @foreach($pembayaran as $index => $p)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ 'ORDER-' . $p->user->id_pemesanan }}</td>
-                    <td>{{ optional($p->user->pemesanan->layanan)->nama_layanan ?? 'Layanan tidak ditemukan' }}</td>
-                    <td>Rp {{ number_format($p->user->jumlah, 0, ',', '.') }}</td>
+                    <td>{{ 'ORDER-' . $p->id_pemesanan }}</td>
+                    <td>{{ optional($p->pemesanan->layanan)->nama_layanan ?? 'Layanan tidak ditemukan' }}</td>
+                    <td>Rp {{ number_format($p->jumlah, 0, ',', '.') }}</td>
                     <td>
                         @if($p->status_pembayaran == 'settlement')
                             <span class="badge bg-success">Berhasil</span>
