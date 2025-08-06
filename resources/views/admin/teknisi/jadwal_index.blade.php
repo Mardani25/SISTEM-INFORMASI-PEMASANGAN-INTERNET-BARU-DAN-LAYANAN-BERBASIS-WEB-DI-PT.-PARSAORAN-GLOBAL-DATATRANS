@@ -92,7 +92,7 @@
     <td class="text-center">{{ ($jadwals->currentPage() - 1) * $jadwals->perPage() + $index + 1 }}</td>
 
     {{-- Nama Teknisi --}}
-    <td>{{ $jadwal->teknisi->name ?? '-' }}</td>
+    <td>{{ $jadwal->user->name ?? '-' }}</td>
 
     {{-- Tanggal dan Waktu --}}
     <td class="text-center">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d-m-Y') }}</td>
