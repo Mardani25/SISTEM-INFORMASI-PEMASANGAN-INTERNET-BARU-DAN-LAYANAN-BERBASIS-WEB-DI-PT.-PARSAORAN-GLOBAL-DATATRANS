@@ -68,40 +68,41 @@ class TeknisiController extends Controller
     }
 
     // Upload bukti foto kehadiran
-    public function uploadBukti(Request $request, $id)
-    {
-        try {
-            $teknisi = Auth::user()->teknisi;
-            $jadwal = JadwalTeknisi::findOrFail($id);
+        public function uploadBukti(Request $request, $id)
+        {
+            try {
+                $teknisi = Auth::user()->teknisi;
+                $jadwal = JadwalTeknisi::findOrFail($id);
 
-            if (!$teknisi || $jadwal->id_teknisi !== $teknisi->id) {
-                return back()->with('error', 'Akses ditolak. Anda bukan teknisi yang ditugaskan.');
+                if (!$teknisi || $jadwal->id_teknisi !== $teknisi->id) {
+                    return back()->with('error', 'Akses ditolak. Anda bukan teknisi yang ditugaskan.');
+                }
+
+                $request->validate([
+                    'bukti_foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                ]);
+
+                $file = $request->file('bukti_foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('bukti_foto', $filename, 'public');
+
+                $jadwal->update([
+                    'bukti_foto' => $filename,
+                    'status_kehadiran' => 'hadir'
+                ]);
+
+                $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . Auth::user()->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
+
+                return back()->with('success', 'Bukti foto berhasil diupload.');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Gagal mengupload bukti: ' . $e->getMessage());
             }
-
-            $request->validate([
-                'bukti_foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-
-            $file = $request->file('bukti_foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('bukti_foto', $filename, 'public');
-
-            $jadwal->update([
-                'bukti_foto' => $filename,
-                'status_kehadiran' => 'hadir'
-            ]);
-
-            $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . Auth::user()->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
-
-            return back()->with('success', 'Bukti foto berhasil diupload.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Gagal mengupload bukti: ' . $e->getMessage());
         }
-    }
 
     // Fungsi bantu untuk mengirim notifikasi ke semua admin
     protected function kirimNotifikasiAdmin($type, $message)
     {
+        
         $admins = User::where('role', 'admin')->get();
         foreach ($admins as $admin) {
             Notification::create([
