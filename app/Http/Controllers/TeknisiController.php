@@ -71,32 +71,43 @@ class TeknisiController extends Controller
 public function uploadBukti(Request $request, $id)
 {
     try {
+        dd('MASUK METHOD'); // 🔍 Cek awal fungsi terpanggil atau tidak
+
         $teknisi = Auth::user()->teknisi;
+        dd($teknisi); // 🔍 Apakah teknisi ditemukan?
+
         $jadwal = JadwalTeknisi::findOrFail($id);
+        dd($jadwal); // 🔍 Apakah jadwal ditemukan?
 
         if (!$teknisi || $jadwal->id_teknisi !== $teknisi->id) {
+            dd('AKSES DITOLAK'); // 🔍 Cek apakah teknisi bukan pemilik jadwal
             return back()->with('error', 'Akses ditolak. Anda bukan teknisi yang ditugaskan.');
         }
 
         $request->validate([
             'bukti_foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        dd('VALIDASI OK'); // 🔍 Validasi berhasil
 
         if (!$request->hasFile('bukti_foto')) {
+            dd('TIDAK ADA FILE'); // 🔍 File tidak ditemukan di request
             return back()->with('error', 'Tidak ada file yang dikirim.');
         }
 
         $file = $request->file('bukti_foto');
+        dd($file); // 🔍 Lihat detail file
 
         if (!$file->isValid()) {
+            dd('FILE TIDAK VALID'); // 🔍 File corrupt
             return back()->with('error', 'File tidak valid.');
         }
 
         $filename = time() . '_' . $file->getClientOriginalName();
-
         $path = $file->storeAs('bukti_foto', $filename, 'public');
+        dd($path); // 🔍 Cek path penyimpanan
 
         if (!$path) {
+            dd('GAGAL SIMPAN'); // 🔍 Simpan gagal
             return back()->with('error', 'Gagal menyimpan file.');
         }
 
@@ -104,14 +115,18 @@ public function uploadBukti(Request $request, $id)
             'bukti_foto' => $filename,
             'status_kehadiran' => 'hadir'
         ]);
+        dd('UPDATE DB OK'); // 🔍 DB update berhasil
 
         $this->kirimNotifikasiAdmin('bukti', 'Teknisi ' . Auth::user()->name . ' mengunggah bukti kehadiran untuk jadwal #' . $jadwal->id);
+        dd('NOTIFIKASI TERKIRIM'); // 🔍 Cek apakah notifikasi berhasil
 
         return back()->with('success', 'Bukti foto berhasil diupload ke: ' . $path);
     } catch (\Exception $e) {
+        dd('EXCEPTION: ' . $e->getMessage()); // 🔍 Tangkap error
         return back()->with('error', 'Gagal upload: ' . $e->getMessage());
     }
 }
+
 
 
     // Fungsi bantu untuk mengirim notifikasi ke semua admin
