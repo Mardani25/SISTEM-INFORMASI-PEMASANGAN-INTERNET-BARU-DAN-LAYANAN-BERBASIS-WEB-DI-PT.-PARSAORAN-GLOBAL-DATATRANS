@@ -35,7 +35,7 @@ class PemesananController extends Controller
         $pemesanans = Pemesanan::with([
             'user',
             'layanan',
-            'jadwalTeknisis.teknisi.user'
+            'jadwalTeknisis.user'
         ])->where('id_user', $userId)->get();
 
         $pemesanan = $pemesanans->first();
