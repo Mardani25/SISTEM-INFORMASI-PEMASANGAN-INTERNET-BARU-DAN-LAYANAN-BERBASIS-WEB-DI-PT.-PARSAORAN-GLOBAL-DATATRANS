@@ -18,81 +18,84 @@
       <div class="layout-page">
 
         <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light ftco_navbar site-navbar-target" id="ftco-navbar">
+<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 
-            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-              <i class="bx bx-menu bx-sm"></i>
+  <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+    <!-- Ganti <a> jadi <button> dengan atribut toggle bootstrap -->
+    <button class="nav-item nav-link px-0 me-xl-4 navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bx bx-menu bx-sm"></i>
+    </button>
+  </div>
+
+  <!-- Tambahkan class collapse navbar-collapse supaya bisa toggle -->
+  <div class="navbar-nav-right d-flex align-items-center collapse navbar-collapse" id="navbar-collapse">
+    <!-- Search -->
+    <div class="navbar-nav align-items-center">
+      <div class="nav-item d-flex align-items-center">
+        <!-- Kosong -->
+      </div>
+    </div>
+    <!-- /Search -->
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <div class="avatar avatar-online border border-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+            <i class="bx bx-user text-primary fs-4"></i>
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online border border-primary rounded-circle p-2">
+                    <i class="bx bx-user text-primary fs-4"></i>
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                  <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
+                </div>
+              </div>
             </a>
-            
-          </div>
-
-          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <!-- Search -->
-            <div class="navbar-nav align-items-center">
-              <div class="nav-item d-flex align-items-center">
-
-              </div>
-            </div>
-            <!-- /Search -->
-
-<ul class="navbar-nav flex-row align-items-center ms-auto">
-  <!-- User -->
-  <li class="nav-item navbar-dropdown dropdown-user dropdown">
-    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-<div class="avatar avatar-online border border-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-  <i class="bx bx-user text-primary fs-4"></i>
-</div>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <a class="dropdown-item" href="#">
-          <div class="d-flex align-items-center">
-            <div class="flex-shrink-0 me-3">
-              <div class="avatar avatar-online border border-primary rounded-circle p-2">
-                  <i class="bx bx-user text-primary fs-4"></i>
-              </div>
-            </div>
-            <div class="flex-grow-1">
-              <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
-              <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
-            </div>
-          </div>
-        </a>
+          </li>
+          <li><div class="dropdown-divider"></div></li>
+          <li>
+            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+              <i class="bx bx-user me-2"></i>
+              <span class="align-middle">My Profile</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{{ route('notifications.index') }}">
+              <i class="bx bx-bell me-2"></i>
+              <span class="align-middle">
+                Notifikasi
+                @if(isset($unreadCount) && $unreadCount > 0)
+                  <span class="badge bg-danger">{{ $unreadCount }}</span>
+                @endif
+              </span>
+            </a>
+          </li>
+          <li><div class="dropdown-divider"></div></li>
+          <li>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="dropdown-item">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Log Out</span>
+              </button>
+            </form>
+          </li>
+        </ul>
       </li>
-      <li><div class="dropdown-divider"></div></li>
-      <li>
-        <a class="dropdown-item" href="{{ route('profile.edit') }}">
-          <i class="bx bx-user me-2"></i>
-          <span class="align-middle">My Profile</span>
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item" href="{{ route('notifications.index') }}">
-          <i class="bx bx-bell me-2"></i>
-          <span class="align-middle">
-            Notifikasi
-            @if(isset($unreadCount) && $unreadCount > 0)
-              <span class="badge bg-danger">{{ $unreadCount }}</span>
-            @endif
-          </span>
-        </a>
-      </li>
-      <li><div class="dropdown-divider"></div></li>
-      <li>
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit" class="dropdown-item">
-            <i class="bx bx-power-off me-2"></i>
-            <span class="align-middle">Log Out</span>
-          </button>
-        </form>
-      </li>
+      <!-- /User -->
     </ul>
-  </li>
-  <!-- /User -->
-</ul>
-          </div>
-        </nav>
+  </div>
+</nav>
+
         <!-- /Navbar -->
 
           <!-- Content -->
