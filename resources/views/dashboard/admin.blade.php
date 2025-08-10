@@ -243,9 +243,6 @@
   
       <!-- Page JS -->
       <script src="../assets/js/dashboards-analytics.js"></script>
-  
-      <!-- GitHub Buttons -->
-      <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 </body>
 
