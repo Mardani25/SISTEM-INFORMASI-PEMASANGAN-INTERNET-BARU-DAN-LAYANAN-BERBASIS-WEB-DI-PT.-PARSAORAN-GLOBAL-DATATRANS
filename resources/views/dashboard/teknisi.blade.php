@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 text-center">
-                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
+                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
                 </div>
               </div>
             </div>
@@ -179,26 +179,7 @@
 
   <!-- GitHub Buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-<script>
-  document.querySelectorAll('.layout-menu-toggle').forEach(toggle => {
-    toggle.addEventListener('click', e => {
-      e.preventDefault();
-      // toggle class pada body atau layout container
-      document.body.classList.toggle('layout-menu-expanded');
-    });
-  });
-</script>
-<script>
-  document.querySelectorAll('.layout-menu-toggle').forEach(toggle => {
-    toggle.addEventListener('click', e => {
-      e.preventDefault();
-      // toggle class pada body atau layout container
-      document.body.classList.toggle('layout-menu-expanded');
-    });
-  });
-</script>
 
 </html>
