@@ -19,12 +19,13 @@ public function index($pemesananId)
 {
     $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-    // Set konfigurasi Midtrans dari config Laravel (.env)
-    Config::$serverKey = config('midtrans.server_key');
-    Config::$clientKey = config('midtrans.client_key');
-    Config::$isProduction = config('midtrans.is_production');
-    Config::$isSanitized = config('midtrans.is_sanitized');
-    Config::$is3ds = config('midtrans.is_3ds');
+    // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
+
+Config::$serverKey = config('midtrans.serverKey');
+Config::$clientKey = config('midtrans.clientKey');
+Config::$isProduction = config('midtrans.isProduction');
+Config::$isSanitized = config('midtrans.isSanitized');
+Config::$is3ds = config('midtrans.is3ds');
 
     $params = [
         'transaction_details' => [
@@ -39,12 +40,10 @@ public function index($pemesananId)
 
     $snapToken = Snap::getSnapToken($params);
 
-    // Pastikan ini yang di return, bukan "true" atau hal lain:
     return view('pembayaran.index', compact('pemesanan', 'snapToken'));
 }
 
-
-
+        
 
 public function simpan(Request $request)
 {
