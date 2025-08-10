@@ -11,36 +11,45 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Notification;
 use App\Models\User;
+use Midtrans\Config as MidtransConfig;
 
 class PembayaranController extends Controller
 {
-    public function index($pemesananId)
-    {
-        $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-        // Konfigurasi Midtrans
-        Config::$serverKey = config('midtrans.serverKey');
-        Config::$clientKey = config('midtrans.clientKey'); // ← tambahkan ini!
-        Config::$isProduction = config('midtrans.isProduction');
-        Config::$isSanitized = config('midtrans.isSanitized');
-        Config::$is3ds = config('midtrans.is3ds');
+public function index($pemesananId)
+{
+    $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-        // Buat Snap Token
-        $params = [
-            'transaction_details' => [
-                'order_id' => 'ORDER-' . $pemesanan->id . '-' . time(),
-                'gross_amount' => $pemesanan->layanan->harga,
-            ],
-            'customer_details' => [
-                'first_name' => 'Pelanggan',
-                'email' => 'pelanggan@example.com',
-            ],
-        ];
+    MidtransConfig::$serverKey = env('MIDTRANS_SERVER_KEY', config('midtrans.server_key'));
+    MidtransConfig::$clientKey = env('MIDTRANS_CLIENT_KEY', config('midtrans.client_key'));
+    MidtransConfig::$isProduction = filter_var(env('MIDTRANS_IS_PRODUCTION', false), FILTER_VALIDATE_BOOLEAN);
+    MidtransConfig::$isSanitized = true;
+    MidtransConfig::$is3ds = true;
 
-        $snapToken = Snap::getSnapToken($params);
-
-        return view('pembayaran.index', compact('pemesanan', 'snapToken'));
+    if (empty(MidtransConfig::$serverKey) || empty(MidtransConfig::$clientKey)) {
+        \Illuminate\Support\Facades\Log::error('Midtrans keys missing', [
+            'MIDTRANS_SERVER_KEY' => env('MIDTRANS_SERVER_KEY'),
+            'MIDTRANS_CLIENT_KEY' => env('MIDTRANS_CLIENT_KEY')
+        ]);
+        abort(500, 'Midtrans configuration missing.');
     }
+
+    $params = [
+        'transaction_details' => [
+            'order_id' => 'ORDER-' . $pemesanan->id . '-' . time(),
+            'gross_amount' => $pemesanan->layanan->harga,
+        ],
+        'customer_details' => [
+            'first_name' => 'Pelanggan',
+            'email' => $pemesanan->email ?? 'pelanggan@example.com',
+        ],
+    ];
+
+    $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+    return view('pembayaran.index', compact('pemesanan', 'snapToken'));
+}
+
 
 
 public function simpan(Request $request)
