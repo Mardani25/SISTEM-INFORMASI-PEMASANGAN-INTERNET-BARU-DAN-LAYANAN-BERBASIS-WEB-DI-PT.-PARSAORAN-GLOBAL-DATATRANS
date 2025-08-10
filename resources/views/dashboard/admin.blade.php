@@ -217,7 +217,7 @@
 
 <!-- Bootstrap Bundle (include Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
 <!-- Vendor JS -->
 <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
