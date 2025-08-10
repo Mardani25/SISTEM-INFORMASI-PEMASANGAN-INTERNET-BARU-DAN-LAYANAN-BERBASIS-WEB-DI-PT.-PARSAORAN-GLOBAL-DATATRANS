@@ -74,16 +74,15 @@
                   @error('telepon') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
 
-<!-- Alamat -->
-<div class="mb-3">
-  <label for="alamat" class="form-label">Alamat</label>
-  <div class="text-warning mb-1">
-    Harap masukkan alamat lengkap dan detail (nama jalan, RT/RW, nomor rumah, patokan) untuk memudahkan pemesanan.
-  </div>
-  <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat') }}" placeholder="Contoh: Jl. Mawar No.12 RT.02 RW.03, dekat masjid Al-Ikhlas" />
-  @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
-</div>
-
+              <!-- Alamat -->
+              <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <small class="text-muted d-block mb-1">
+                  Harap masukkan alamat lengkap dan detail (nama jalan, RT/RW, nomor rumah, patokan) untuk memudahkan pemesanan.
+                </small>
+                <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Contoh: Jl. Mawar No.12 RT.02 RW.03, dekat masjid Al-Ikhlas">{{ old('alamat') }}</textarea>
+                @error('alamat') <small class="text-danger">{{ $message }}</small> @enderror
+              </div>
 
 
                 <!-- Email -->
