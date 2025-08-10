@@ -210,41 +210,25 @@
     <div class="layout-overlay layout-menu-toggle"></div>
 
   </div>
-  <!-- /Layout wrapper -->
- <script></script>
-  <!-- Core JS -->
-  <script src="../assets/vendor/libs/popper/popper.js"></script>
-  <script src="../assets/vendor/js/bootstrap.js"></script>
-  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="../assets/vendor/js/menu.js"></script>
+<!-- Core JS -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script> <!-- Jika butuh jQuery -->
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/js/menu.js"></script> <!-- Script khusus menu/sidebar -->
 
-  <!-- Vendors JS -->
-  <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-  <!-- Main JS -->
-
-  <!-- Page JS -->
-  <script src="../assets/js/dashboards-analytics.js"></script>
-
-  <!-- GitHub Buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-      <!-- Core JS -->
-      <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-      <script src="../assets/vendor/libs/popper/popper.js"></script>
-      <script src="../assets/vendor/js/bootstrap.js"></script>
-      <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-      <script src="../assets/vendor/js/menu.js"></script>
-  
-      <!-- Vendors JS -->
-      <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
-  
-      <!-- Main JS -->
-      <script src="../assets/js/main.js"></script>
-  
-      <!-- Page JS -->
-      <script src="../assets/js/dashboards-analytics.js"></script>
+<!-- Bootstrap Bundle (include Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<!-- Vendor JS -->
+<script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../assets/js/dashboards-analytics.js"></script>
+
+<!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 </body>
 
