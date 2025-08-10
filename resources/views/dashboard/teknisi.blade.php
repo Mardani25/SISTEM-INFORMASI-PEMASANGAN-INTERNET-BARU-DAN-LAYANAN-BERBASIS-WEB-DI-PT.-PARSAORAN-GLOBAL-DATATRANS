@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 text-center">
-                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
+                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
                 </div>
               </div>
             </div>
