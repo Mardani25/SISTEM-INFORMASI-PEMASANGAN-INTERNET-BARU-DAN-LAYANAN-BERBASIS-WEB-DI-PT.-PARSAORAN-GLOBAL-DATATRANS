@@ -15,34 +15,33 @@ use App\Models\User;
 class PembayaranController extends Controller
 {
 
-public function index($pemesananId)
-{
-    $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
+    public function index($pemesananId)
+    {
+        $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-    // Set konfigurasi Midtrans
-    Config::$serverKey = config('midtrans.server_key');
-    Config::$clientKey = config('midtrans.client_key');
-    Config::$isProduction = config('midtrans.is_production');
-    Config::$isSanitized = config('midtrans.is_sanitized');
-    Config::$is3ds = config('midtrans.is_3ds');
+        // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
 
-    $params = [
-        'transaction_details' => [
-            'order_id' => 'order-' . $pemesanan->id,
-            'gross_amount' => $pemesanan->layanan->harga,
-        ],
-        'customer_details' => [
-            'first_name' => 'Pelanggan',
-            'email' => 'pelanggan@example.com',
-        ],
-    ];
+    Config::$serverKey = config('midtrans.serverKey');
+    Config::$clientKey = config('midtrans.clientKey');
+    Config::$isProduction = config('midtrans.isProduction');
+    Config::$isSanitized = config('midtrans.isSanitized');
+    Config::$is3ds = config('midtrans.is3ds');
 
-    $snapToken = Snap::getSnapToken($params);
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'order-' . $pemesanan->id,
+                'gross_amount' => $pemesanan->layanan->harga,
+            ],
+            'customer_details' => [
+                'first_name' => 'Pelanggan',
+                'email' => 'pelanggan@example.com',
+            ],
+        ];
 
-    // Kembalikan ke view pembayaran.index dengan data yang diperlukan
-    return view('pembayaran.index', compact('pemesanan', 'snapToken'));
-}
+        $snapToken = Snap::getSnapToken($params);
 
+        return view('pembayaran.index', compact('pemesanan', 'snapToken'));
+    }
 
         
 
