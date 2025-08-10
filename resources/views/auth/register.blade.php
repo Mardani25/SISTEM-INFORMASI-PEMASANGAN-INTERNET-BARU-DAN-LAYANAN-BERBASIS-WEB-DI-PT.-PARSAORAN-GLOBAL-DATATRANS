@@ -124,6 +124,26 @@
         </div>
       </div>
     </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.form-password-toggle .input-group-text').forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        let input = this.closest('.input-group').querySelector('input');
+        let icon = this.querySelector('i');
+
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('bx-hide');
+          icon.classList.add('bx-show');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('bx-show');
+          icon.classList.add('bx-hide');
+        }
+      });
+    });
+  });
+</script>
 
     <!-- Scripts -->
     <script src="../assets/vendor/libs/jquery/jquery.js"></script>
