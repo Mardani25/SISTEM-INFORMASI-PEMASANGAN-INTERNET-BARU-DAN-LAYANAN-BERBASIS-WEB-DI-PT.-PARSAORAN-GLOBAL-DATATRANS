@@ -180,20 +180,25 @@
   <!-- GitHub Buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.querySelector('.layout-menu-toggle a'); // klik pada <a>
-    const sidebar = document.getElementById('layout-menu');
-
-    if (toggle && sidebar) {
-      toggle.addEventListener('click', function (e) {
-        e.preventDefault();
-        sidebar.classList.toggle('d-none');  // toggle sembunyikan sidebar
-      });
-    }
-  });
-</script>
 
 </body>
+<script>
+  document.querySelectorAll('.layout-menu-toggle').forEach(toggle => {
+    toggle.addEventListener('click', e => {
+      e.preventDefault();
+      // toggle class pada body atau layout container
+      document.body.classList.toggle('layout-menu-expanded');
+    });
+  });
+</script>
+<script>
+  document.querySelectorAll('.layout-menu-toggle').forEach(toggle => {
+    toggle.addEventListener('click', e => {
+      e.preventDefault();
+      // toggle class pada body atau layout container
+      document.body.classList.toggle('layout-menu-expanded');
+    });
+  });
+</script>
 
 </html>
