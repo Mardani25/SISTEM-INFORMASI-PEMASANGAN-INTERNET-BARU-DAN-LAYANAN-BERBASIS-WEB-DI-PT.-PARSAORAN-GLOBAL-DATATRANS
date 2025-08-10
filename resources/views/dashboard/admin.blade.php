@@ -18,70 +18,79 @@
       <div class="layout-page">
 
         <!-- Navbar -->
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light ftco_navbar site-navbar-target" id="ftco-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">ION</a>
+<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 
-    <!-- Tombol Toggle untuk Mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- Toggle Button -->
+  <button class="navbar-toggler d-xl-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- Menu Navigasi -->
-    <div class="collapse navbar-collapse" id="ftco-nav">
-      <ul class="navbar-nav ms-auto"> <!-- note: ml-auto diganti ms-auto di Bootstrap 5 -->
-        <li class="nav-item"><a href="/" class="nav-link"><span>Home</span></a></li>
-        <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-        <li class="nav-item"><a href="#jamu-section" class="nav-link"><span>Internet</span></a></li>
-        <li class="nav-item"><a href="/complains" class="nav-link"><span>Komplain</span></a></li>
-        <li class="nav-item"><a href="#kontak-section" class="nav-link"><span>Kontak</span></a></li>
-        <li class="nav-item"><a href="/pemesanante" class="nav-link"><span>Status Pemasangan</span></a></li>
-        <li class="nav-item"><a href="/riwayat" class="nav-link"><span>Riwayat</span></a></li>
+  <!-- Navbar Collapse -->
+  <div class="navbar-nav-right d-flex align-items-center collapse navbar-collapse" id="navbar-collapse">
+    <!-- Search -->
+    <div class="navbar-nav align-items-center">
+      <div class="nav-item d-flex align-items-center">
+        <!-- (kosong) -->
+      </div>
+    </div>
+    <!-- /Search -->
 
-        <!-- Auth Links -->
-        @auth
-          <li class="nav-item d-block d-lg-none">
-            <a class="nav-link" href="{{ route('profile.edit') }}">
-              <i class="bi bi-person me-1"></i> My Profile
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <div class="avatar avatar-online border border-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+            <i class="bx bx-user text-primary fs-4"></i>
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online border border-primary rounded-circle p-2">
+                    <i class="bx bx-user text-primary fs-4"></i>
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                  <small class="text-muted">{{ ucfirst(Auth::user()->role) }}</small>
+                </div>
+              </div>
             </a>
           </li>
-          <li class="nav-item d-block d-lg-none">
+          <li><div class="dropdown-divider"></div></li>
+          <li>
+            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+              <i class="bx bx-user me-2"></i>
+              <span class="align-middle">My Profile</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{{ route('notifications.index') }}">
+              <i class="bx bx-bell me-2"></i>
+              <span class="align-middle">
+                Notifikasi
+                @if(isset($unreadCount) && $unreadCount > 0)
+                  <span class="badge bg-danger">{{ $unreadCount }}</span>
+                @endif
+              </span>
+            </a>
+          </li>
+          <li><div class="dropdown-divider"></div></li>
+          <li>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
-              <button class="nav-link btn btn-link p-0" type="submit">
-                <i class="bi bi-box-arrow-right me-1"></i> Log Out
+              <button type="submit" class="dropdown-item">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Log Out</span>
               </button>
             </form>
           </li>
-        @else
-          <li class="nav-item d-block d-lg-none"><a href="{{ route('register') }}" class="nav-link">Daftar</a></li>
-          <li class="nav-item d-block d-lg-none"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
-        @endauth
-      </ul>
-    </div>
-
-    <!-- Kanan Atas (Hanya tampil di desktop) -->
-    <div class="d-none d-lg-block">
-      @auth
-      <div class="d-flex align-items-center gap-3">
-        <a class="text-dark text-decoration-none" href="{{ route('profile.edit') }}">
-          <i class="bi bi-person-circle me-1"></i> My Profile
-        </a>
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button class="btn btn-sm btn-outline-danger" type="submit">
-            <i class="bi bi-box-arrow-right me-1"></i> Logout
-          </button>
-        </form>
-      </div>
-      @else
-      <p class="mb-0 register-link">
-        <a href="{{ route('register') }}" class="me-3 text-dark text-decoration-none">Daftar</a>
-        <a href="{{ route('login') }}" class="text-dark text-decoration-none">Login</a>
-      </p>
-      @endauth
-    </div>
+        </ul>
+      </li>
+      <!-- /User -->
+    </ul>
   </div>
 </nav>
 
@@ -209,7 +218,7 @@
 
 <!-- Bootstrap Bundle (include Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Vendor JS -->
 <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
