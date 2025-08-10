@@ -11,24 +11,24 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Notification;
 use App\Models\User;
-
+    
 class PembayaranController extends Controller
 {
+
 public function index($pemesananId)
 {
     $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-    // Konfigurasi Midtrans
-    Config::$serverKey = config('midtrans.serverKey');
-    Config::$clientKey = config('midtrans.clientKey'); // ← tambahkan ini!
+    // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
+    Config::$serverKey = config('midtrans.serverKey');   // pastikan config/midtrans.php benar
+    Config::$clientKey = config('midtrans.clientKey');
     Config::$isProduction = config('midtrans.isProduction');
     Config::$isSanitized = config('midtrans.isSanitized');
     Config::$is3ds = config('midtrans.is3ds');
 
-    // Buat Snap Token
     $params = [
         'transaction_details' => [
-            'order_id' => 'ORDER-' . $pemesanan->id . '-' . time(),
+            'order_id' => 'order-' . $pemesanan->id,
             'gross_amount' => $pemesanan->layanan->harga,
         ],
         'customer_details' => [
@@ -41,6 +41,7 @@ public function index($pemesananId)
 
     return view('pembayaran.index', compact('pemesanan', 'snapToken'));
 }
+
 
 
 public function simpan(Request $request)
