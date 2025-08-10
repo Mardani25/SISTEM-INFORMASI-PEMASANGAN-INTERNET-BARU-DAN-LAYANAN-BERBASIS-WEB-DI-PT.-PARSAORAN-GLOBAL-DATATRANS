@@ -243,6 +243,7 @@
   
       <!-- Page JS -->
       <script src="../assets/js/dashboards-analytics.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
