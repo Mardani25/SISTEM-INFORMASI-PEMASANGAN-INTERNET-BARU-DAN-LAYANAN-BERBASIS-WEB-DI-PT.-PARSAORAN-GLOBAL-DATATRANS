@@ -20,11 +20,12 @@ public function index($pemesananId)
     $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
     // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
-    Config::$serverKey = config('midtrans.serverKey');   // pastikan config/midtrans.php benar
-    Config::$clientKey = config('midtrans.clientKey');
-    Config::$isProduction = config('midtrans.isProduction');
-    Config::$isSanitized = config('midtrans.isSanitized');
-    Config::$is3ds = config('midtrans.is3ds');
+
+Config::$serverKey = config('midtrans.serverKey');
+Config::$clientKey = config('midtrans.clientKey');
+Config::$isProduction = config('midtrans.isProduction');
+Config::$isSanitized = config('midtrans.isSanitized');
+Config::$is3ds = config('midtrans.is3ds');
 
     $params = [
         'transaction_details' => [
