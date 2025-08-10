@@ -108,7 +108,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 text-center">
-                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
+                  <img src="../assets/img/illustrations/man-with-laptop-light.png" height="140" alt="" class="img-fluid p-3" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png" />
                 </div>
               </div>
             </div>
@@ -229,6 +229,19 @@
 
 <!-- GitHub Buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.querySelector('.layout-menu-toggle a'); // klik pada <a>
+    const sidebar = document.getElementById('layout-menu');
+
+    if (toggle && sidebar) {
+      toggle.addEventListener('click', function (e) {
+        e.preventDefault();
+        sidebar.classList.toggle('d-none');  // toggle sembunyikan sidebar
+      });
+    }
+  });
+</script>
 
 </body>
 
