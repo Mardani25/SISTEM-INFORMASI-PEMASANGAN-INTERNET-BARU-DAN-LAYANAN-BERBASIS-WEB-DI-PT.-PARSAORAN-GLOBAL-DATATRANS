@@ -15,35 +15,34 @@ use App\Models\User;
 class PembayaranController extends Controller
 {
 
-    public function index($pemesananId)
-    {
-        $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
+public function index($pemesananId)
+{
+    $pemesanan = Pemesanan::with('layanan')->findOrFail($pemesananId);
 
-        // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
-
-    Config::$serverKey = config('midtrans.serverKey');
+    // Set konfigurasi Midtrans dari config Laravel (ambil dari .env)
+    Config::$serverKey = config('midtrans.serverKey');   // pastikan config/midtrans.php benar
     Config::$clientKey = config('midtrans.clientKey');
     Config::$isProduction = config('midtrans.isProduction');
     Config::$isSanitized = config('midtrans.isSanitized');
     Config::$is3ds = config('midtrans.is3ds');
 
-        $params = [
-            'transaction_details' => [
-                'order_id' => 'order-' . $pemesanan->id,
-                'gross_amount' => $pemesanan->layanan->harga,
-            ],
-            'customer_details' => [
-                'first_name' => 'Pelanggan',
-                'email' => 'pelanggan@example.com',
-            ],
-        ];
+    $params = [
+        'transaction_details' => [
+            'order_id' => 'order-' . $pemesanan->id,
+            'gross_amount' => $pemesanan->layanan->harga,
+        ],
+        'customer_details' => [
+            'first_name' => 'Pelanggan',
+            'email' => 'pelanggan@example.com',
+        ],
+    ];
 
-        $snapToken = Snap::getSnapToken($params);
+    $snapToken = Snap::getSnapToken($params);
 
-        return view('pembayaran.index', compact('pemesanan', 'snapToken'));
-    }
+    return view('pembayaran.index', compact('pemesanan', 'snapToken'));
+}
 
-        
+
 
 public function simpan(Request $request)
 {
