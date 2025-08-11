@@ -38,7 +38,7 @@
                 <tbody>
                     @foreach($complains as $complain)
                         <tr class="align-top">
-                            <td>{{ $complain->pelanggan->user->name ?? 'Tidak Diketahui' }}</td>
+                            <td>{{ $complain->user->name ?? 'Tidak Diketahui' }}</td>
                             <td>{{ $complain->pesan }}</td>
                             <td>
                                 @if($complain->tanggapan)
