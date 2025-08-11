@@ -216,7 +216,6 @@
 <script src="../assets/vendor/js/menu.js"></script> <!-- Script khusus menu/sidebar -->
 
 <!-- Bootstrap Bundle (include Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Vendor JS -->
 <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
