@@ -8,10 +8,6 @@
 
     <!-- Snap Midtrans -->
 <script src="{{ config('midtrans.isProduction') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('midtrans.clientKey') }}"></script>
-    {{-- Debug mode --}}
-@php
-    dd(config('midtrans.isProduction'));
-@endphp
 
     <!-- Bootstrap & Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -70,52 +66,51 @@
         </div>
 
         <div class="text-center">
-<<<<<<< HEAD
             <a href="/pelanggan/dashboard" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
-=======
-            <a href="/dashboard" class="btn btn-outline-secondary">← Kembali ke Dashboard</a>
->>>>>>> 26740fb (sistem-pemesanan)
         </div>
     </div>
 </div>
 
 <!-- Midtrans Payment Script -->
 <script>
-    document.getElementById('pay-button').addEventListener('click', function () {
-        snap.pay({{ json_encode($snapToken) }}, {
-            onSuccess: function(result){
-                fetch('/pembayaran/simpan', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        id: {{ json_encode($pemesanan->id) }},
-                        gross_amount: result.gross_amount,
-                        transaction_status: result.transaction_status
-                    })
+document.getElementById('pay-button').addEventListener('click', function () {
+    // Jika ada loading, bisa ditambahkan di sini
+
+    snap.pay('{{ $snapToken }}', {
+        onSuccess: function(result){
+            fetch('/pembayaran/simpan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    id: {{ $pemesanan->id }},
+                    gross_amount: result.gross_amount,
+                    transaction_status: result.transaction_status
                 })
-                .then(response => response.json())
-                .then(data => {
-                    window.location.href = data.redirect;
-                })
-                .catch(error => {
-                    console.error('Error saat menyimpan pembayaran:', error);
-                    alert('Terjadi kesalahan saat menyimpan pembayaran.');
-                });
-            },
-            onPending: function() {
-                alert("Menunggu pembayaran...");
-            },
-            onError: function() {
-                alert("Pembayaran gagal.");
-            },
-            onClose: function() {
-                alert("Anda menutup jendela pembayaran.");
-            }
-        });
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = data.redirect;
+            })
+            .catch(error => {
+                console.error('Error saat menyimpan pembayaran:', error);
+                alert('Terjadi kesalahan saat menyimpan pembayaran.');
+            });
+        },
+        onPending: function() {
+            alert("Menunggu pembayaran...");
+        },
+        onError: function() {
+            alert("Pembayaran gagal.");
+        },
+        onClose: function() {
+            alert("Anda menutup jendela pembayaran.");
+        }
     });
+});
+
 </script>
 
 
