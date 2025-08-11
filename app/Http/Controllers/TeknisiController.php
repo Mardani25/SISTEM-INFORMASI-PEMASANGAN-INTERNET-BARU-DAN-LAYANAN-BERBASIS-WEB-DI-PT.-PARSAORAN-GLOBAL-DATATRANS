@@ -68,23 +68,29 @@ class TeknisiController extends Controller
     }
 
     // Upload bukti foto kehadiran
-public function uploadBukti(Request $request, $id)
+// Contoh di Controller
+public function uploadBukti(Request $request)
 {
-    $jadwal = JadwalTeknisi::findOrFail($id);
+    $request->validate([
+        'bukti_foto' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-    if ($request->hasFile('bukti_foto')) {
-        $file = $request->file('bukti_foto');
-        $filename = time() . '_' . $file->getClientOriginalName();
+    // Ambil file dari form
+    $file = $request->file('bukti_foto');
 
-        // Simpan ke storage/app/public/bukti_foto
-        $file->storeAs('bukti_foto', $filename, 'public');
+    // Simpan ke storage/app/public/bukti_foto
+    $path = $file->storeAs(
+        'bukti_foto', // folder di storage/app/public
+        time() . '_' . $file->getClientOriginalName(), // nama file
+        'public' // disk 'public'
+    );
 
-        $jadwal->bukti_foto = $filename;
-        $jadwal->save();
-    }
+    // Simpan path ke database kalau perlu
+    // Model::create(['bukti_foto' => $path]);
 
-    return redirect()->back()->with('success', 'Bukti foto berhasil diupload');
+    return back()->with('success', 'Bukti berhasil diupload');
 }
+
 
 
     // Fungsi bantu untuk mengirim notifikasi ke semua admin
