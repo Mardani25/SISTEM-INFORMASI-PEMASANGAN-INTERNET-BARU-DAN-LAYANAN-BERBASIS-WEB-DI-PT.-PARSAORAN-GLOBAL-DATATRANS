@@ -74,15 +74,18 @@ public function uploadBukti(Request $request, $id)
 
     if ($request->hasFile('bukti_foto')) {
         $file = $request->file('bukti_foto');
-        $filename = time().'_'.$file->getClientOriginalName();
-        $file->storeAs('public/bukti_foto', $filename);
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        // Simpan ke storage/app/public/bukti_foto
+        $file->storeAs('bukti_foto', $filename, 'public');
 
         $jadwal->bukti_foto = $filename;
         $jadwal->save();
     }
-    
+
     return redirect()->back()->with('success', 'Bukti foto berhasil diupload');
 }
+
 
     // Fungsi bantu untuk mengirim notifikasi ke semua admin
     protected function kirimNotifikasiAdmin($type, $message)
