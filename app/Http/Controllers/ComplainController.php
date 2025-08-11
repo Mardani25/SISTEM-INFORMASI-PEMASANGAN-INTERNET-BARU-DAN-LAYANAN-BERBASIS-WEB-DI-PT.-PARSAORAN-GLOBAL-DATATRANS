@@ -62,14 +62,14 @@ class ComplainController extends Controller
     }
 
     // ✅ Tampilkan daftar semua komplain untuk admin
-    public function adminIndex()
-    {
-        $complains = Complain::where('created_at', '>=', Carbon::now()->subDays(3))
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
+public function adminIndex()
+{
+    $complains = Complain::orderBy('created_at', 'desc')
+        ->paginate(5);
 
-        return view('admin.komplain', compact('complains'));
-    }
+    return view('admin.komplain', compact('complains'));
+}
+
 
     // ✅ Admin memberikan tanggapan
     public function tanggapi(Request $request, $id)
