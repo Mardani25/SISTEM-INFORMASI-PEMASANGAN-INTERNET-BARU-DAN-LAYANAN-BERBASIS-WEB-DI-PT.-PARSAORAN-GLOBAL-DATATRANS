@@ -99,7 +99,7 @@
                 {{ $pemesanan->user->name ?? 'Tanpa Nama' }} |
                 {{ $pemesanan->layanan->nama_layanan ?? '-' }} |
                 Rp{{ number_format($pemesanan->layanan->harga ?? 0, 0, ',', '.') }} |
-                Jadwal: {{ $pemesanan->jadwal_pemasangan ? \Carbon\Carbon::parse($pemesanan->jadwal_pemasangan)->format('Y-m-d') : '-' }}
+                    Jadwal: {{ $pemesanan->jadwal_pemasangan ? \Carbon\Carbon::parse($pemesanan->jadwal_pemasangan)->format('Y-m-d') : '-' }}
             </option>
         @endforeach
     </select>

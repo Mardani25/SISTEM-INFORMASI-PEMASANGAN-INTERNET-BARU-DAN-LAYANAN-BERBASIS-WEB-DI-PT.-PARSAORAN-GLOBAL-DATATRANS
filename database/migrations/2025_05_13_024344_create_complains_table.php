@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('complains', function (Blueprint $table) {
             $table->id();
-
             // Relasi ke tabel users (sebagai pengganti pelanggans)
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-
             $table->text('pesan');
             $table->text('tanggapan')->nullable();
 
