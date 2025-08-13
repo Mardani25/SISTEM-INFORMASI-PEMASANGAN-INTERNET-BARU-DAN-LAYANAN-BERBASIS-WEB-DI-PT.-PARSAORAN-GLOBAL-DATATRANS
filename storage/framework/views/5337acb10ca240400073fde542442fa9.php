@@ -78,8 +78,7 @@
                             <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
                         </form>
                 <?php elseif($jadwal->bukti_foto): ?>
-                    <a href="<?php echo e(asset('storage/bukti_foto/' . $jadwal->bukti_foto)); ?>" target="_blank" class="btn btn-outline-info btn-sm">Lihat</a>
-                        Lihat Bukti
+                    <a href="<?php echo e(asset('/storage/app/public/bukti_foto/' . $jadwal->bukti_foto)); ?>" target="_blank" class="btn btn-outline-info btn-sm">Lihat</a>
                     </a>
                 <?php else: ?>
                     <span class="text-muted">Belum ada</span>
