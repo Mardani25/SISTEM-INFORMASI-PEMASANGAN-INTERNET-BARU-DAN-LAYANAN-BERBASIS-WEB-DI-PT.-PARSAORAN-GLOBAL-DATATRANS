@@ -46,7 +46,7 @@
     @foreach($jadwals as $jadwal)
         <tr>
             <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
-            <td>{{ $jadwal->pemesanan->name ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
             <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
             <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
             
@@ -85,7 +85,7 @@
             </td>
         </tr>
     @endforeach
-    </tbody>
+    </tbody>    
 
                     </table>
                 </div>
