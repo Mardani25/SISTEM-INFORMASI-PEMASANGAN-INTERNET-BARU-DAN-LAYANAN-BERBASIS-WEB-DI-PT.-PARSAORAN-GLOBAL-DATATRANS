@@ -7,7 +7,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-<link rel="stylesheet" href="{{ asset('build/assets/app-BVDl6rg7.css') }}"></head>
+<script src="{{ asset('build/assets/app-BVDl6rg7.js') }}"></script></head>
 <body class="font-sans antialiased bg-gray-100">
 
     <nav x-data="{ open: false }" class="bg-white shadow">
