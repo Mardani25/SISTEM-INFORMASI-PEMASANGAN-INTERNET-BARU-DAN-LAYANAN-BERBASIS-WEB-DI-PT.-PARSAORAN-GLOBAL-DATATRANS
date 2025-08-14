@@ -6,6 +6,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'Laravel') }}</title>
 <link rel="stylesheet" href="{{ asset('build/assets/app-BVDl6rg7.css') }}">
+<script src="{{ asset('build/assets/app-BVDl6rg7.js') }}"></script>
 <style>
     body {
         font-family: 'Inter', sans-serif;
