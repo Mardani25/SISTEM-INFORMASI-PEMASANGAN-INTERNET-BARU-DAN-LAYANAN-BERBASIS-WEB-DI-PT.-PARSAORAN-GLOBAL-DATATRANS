@@ -94,30 +94,10 @@
             ">← Kembali ke Dashboard</a>
         </div>
 
-        <!-- Logout (desktop) -->
-        @auth
-        <div class="desktop-logout">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn-logout">Log Out</button>
-            </form>
-        </div>
-        @endauth
 
 
     </nav>
 
-    <!-- Mobile Logout Menu -->
-    @auth
-    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden px-4 py-2">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition">
-                Log Out
-            </button>
-        </form>
-    </div>
-    @endauth
 
     <!-- Header -->
     @if (isset($header))
