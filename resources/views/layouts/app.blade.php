@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'Laravel') }}</title>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-
+<link rel="stylesheet" href="{{ asset('build/assets/app-BVDl6rg7.css') }}">
 <style>
     body {
         font-family: 'Inter', sans-serif;
