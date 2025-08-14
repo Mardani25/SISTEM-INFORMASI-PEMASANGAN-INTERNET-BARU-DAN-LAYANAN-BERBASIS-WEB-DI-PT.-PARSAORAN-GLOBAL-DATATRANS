@@ -81,22 +81,22 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen flex flex-col">
 
-    <!-- Navbar -->
-    <nav x-data="{ open: false }" class="flex justify-between items-center h-16 max-w-7xl mx-auto">
-        <div>
-            <a href="
-                @switch(auth()->user()->role)
-                    @case('admin') {{ route('admin.dashboard') }} @break
-                    @case('teknisi') {{ route('teknisi.dashboard') }} @break
-                    @case('pelanggan') {{ route('pelanggan.dashboard') }} @break
-                    @default {{ route('welcome') }}
-                @endswitch
-            ">← Kembali ke Dashboard</a>
-        </div>
-
-
-
-    </nav>
+<!-- Navbar -->
+<nav x-data="{ open: false }" class="bg-white shadow-md rounded-b-lg py-3 px-6 max-w-7xl mx-auto flex justify-between items-center">
+    <div>
+        <a href="
+            @switch(auth()->user()->role)
+                @case('admin') {{ route('admin.dashboard') }} @break
+                @case('teknisi') {{ route('teknisi.dashboard') }} @break
+                @case('pelanggan') {{ route('pelanggan.dashboard') }} @break
+                @default {{ route('welcome') }}
+            @endswitch
+        "
+           class="text-blue-600 font-semibold px-4 py-2 rounded-md hover:bg-blue-100 transition duration-200">
+           ← Kembali ke Dashboard
+        </a>
+    </div>
+</nav>
 
 
     <!-- Header -->
