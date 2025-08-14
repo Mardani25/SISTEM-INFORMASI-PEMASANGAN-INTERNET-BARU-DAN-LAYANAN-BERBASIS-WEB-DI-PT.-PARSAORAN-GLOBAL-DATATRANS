@@ -36,6 +36,7 @@
                             <tr>
                                 <th>Waktu</th>
                                 <th>Pelanggan</th>
+                                <th>Alamat</th>
                                 <th>Layanan</th>
                                 <th>Keterangan</th>
                                 <th>Status Kehadiran</th>
@@ -47,6 +48,7 @@
         <tr>
             <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
             <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->alamat ?? '-' }}</td>
             <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
             <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
             
