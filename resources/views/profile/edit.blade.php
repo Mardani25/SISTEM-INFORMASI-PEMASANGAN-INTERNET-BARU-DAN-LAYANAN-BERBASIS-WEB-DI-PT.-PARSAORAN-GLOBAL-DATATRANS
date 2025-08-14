@@ -5,25 +5,50 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+    {{-- CSS khusus halaman ini --}}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+        }
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+        .card h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+    </style>
+
+    <div class="container">
+        <div class="card">
+            <h3>Update Profile</h3>
+            @include('profile.partials.update-profile-information-form')
+        </div>
+
+        <div class="card">
+            <h3>Update Password</h3>
+            @include('profile.partials.update-password-form')
+        </div>
+
+        <div class="card">
+            <h3>Hapus Akun</h3>
+            @include('profile.partials.delete-user-form')
         </div>
     </div>
 </x-app-layout>
