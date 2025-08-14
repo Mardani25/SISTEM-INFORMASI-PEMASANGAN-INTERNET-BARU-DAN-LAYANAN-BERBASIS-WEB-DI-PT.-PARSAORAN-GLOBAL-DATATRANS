@@ -1,153 +1,102 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<title>{{ config('app.name', 'Laravel') }}</title>
-@vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<style>
-    /* Body */
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f4f6f8;
-        margin: 0;
-    }
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    /* Navbar */
-    nav {
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    nav a {
-        color: #2563eb;
-        font-weight: 500;
-        text-decoration: none;
-        transition: all 0.3s;
-    }
-
-    nav a:hover {
-        color: #1d4ed8;
-        text-decoration: underline;
-    }
-
-    /* Buttons */
-    .btn-logout {
-        background-color: #2563eb;
-        color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-
-    .btn-logout:hover {
-        background-color: #1d4ed8;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    /* Header */
-    header {
-        background: #ffffff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    header h2 {
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: #111827;
-    }
-
-    /* Main content card */
-    main > .card {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    /* Hamburger animation */
-    .hamburger svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 640px) {
-        .desktop-menu { display: none; }
-    }
-</style>
 </head>
+<body class="font-sans antialiased bg-gray-100">
+    <div class="min-h-screen flex flex-col">
 
-<body>
-<div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <nav x-data="{ open: false }" class="bg-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
 
-    <!-- Navbar -->
-    <nav x-data="{ open: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
+                    <!-- Logo / Dashboard Link -->
+                    <div class="flex-shrink-0">
+                        <a href="
+                            @switch(auth()->user()->role)
+                                @case('admin')
+                                    {{ route('admin.dashboard') }}
+                                    @break
+                                @case('teknisi')
+                                    {{ route('teknisi.dashboard') }}
+                                    @break
+                                @case('pelanggan')
+                                    {{ route('pelanggan.dashboard') }}
+                                    @break
+                                @default
+                                    {{ route('welcome') }}
+                            @endswitch
+                        " class="text-blue-600 font-semibold hover:text-blue-800 transition">
+                            ← Kembali ke Dashboard
+                        </a>
+                    </div>
 
-                <!-- Dashboard Link -->
-                <div class="flex-shrink-0">
-                    <a href="
-                        @switch(auth()->user()->role)
-                            @case('admin') {{ route('admin.dashboard') }} @break
-                            @case('teknisi') {{ route('teknisi.dashboard') }} @break
-                            @case('pelanggan') {{ route('pelanggan.dashboard') }} @break
-                            @default {{ route('welcome') }}
-                        @endswitch
-                    ">
-                        ← Kembali ke Dashboard
-                    </a>
+                    <!-- Desktop Menu -->
+                    <div class="hidden sm:flex sm:items-center space-x-4">
+                        @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Log Out
+                            </button>
+                        </form>
+                        @endauth
+                    </div>
+
+                    <!-- Mobile Hamburger -->
+                    <div class="sm:hidden flex items-center">
+                        <button @click="open = !open" class="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition">
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
                 </div>
+            </div>
 
-                <!-- Desktop Menu -->
-                <div class="desktop-menu">
-                    @auth
+            <!-- Mobile Menu -->
+            <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
+                @auth
+                <div class="pt-4 pb-1 border-t border-gray-200">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="btn-logout">Log Out</button>
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition">
+                            Log Out
+                        </button>
                     </form>
-                    @endauth
                 </div>
-
-                <!-- Hamburger -->
-                <div class="sm:hidden flex items-center">
-                    <button @click="open = !open" class="hamburger p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition">
-                        <svg stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
-                </div>
-
+                @endauth
             </div>
-        </div>
+        </nav>
 
-        <!-- Mobile Menu -->
-        <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
-            @auth
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Log Out</button>
-                </form>
+        <!-- Header -->
+        @if (isset($header))
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-semibold text-gray-800 leading-tight">
+                    {{ $header }}
+                </h2>
             </div>
-            @endauth
-        </div>
-    </nav>
+        </header>
+        @endif
 
-    <!-- Header -->
-    @if(isset($header))
-    <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h2>{{ $header }}</h2>
-        </div>
-    </header>
-    @endif
+        <!-- Main Content -->
+        <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                {{ $slot }}
+            </div>
+        </main>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="card">
+    </div>
+</body>
+</html>
