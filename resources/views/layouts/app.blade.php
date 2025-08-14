@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+
+<style>
+    body { background-color: #f0f4f8; font-family: 'Segoe UI', sans-serif; }
+    .card { background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); margin-bottom: 30px; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .card h3 { font-size: 1.5rem; font-weight: 600; color: #111827; margin-bottom: 20px; }
+    input, select, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #d1d5db; border-radius: 10px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+    button { background-color: #3b82f6; color: white; padding: 12px 25px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; }
+    button:hover { background-color: #2563eb; transform: translateY(-2px); }
+</style>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
