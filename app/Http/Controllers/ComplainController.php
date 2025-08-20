@@ -2,42 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Complain;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Notification;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ComplainController extends Controller
 {
-    // ✅ Index komplain sesuai role
+    // ✅ Komplain pelanggan (index)
     public function index()
     {
         $user = Auth::user();
 
-        if (!$user) {
-            return redirect()->route('login');
+        if (!$user || $user->role !== 'pelanggan') {
+            return view('pelanggan.komplain', ['complains' => collect()]);
         }
 
-        if ($user->role === 'pelanggan') {
-            // Pelanggan hanya lihat komplainnya sendiri
-            $complains = Complain::where('id_user', $user->id)->latest()->paginate(5);
-            return view('pelanggan.komplain', compact('complains'));
-        }
+        $complains = Complain::where('id_user', $user->id)
+            ->orderByDesc('created_at')
+            ->paginate(5);  // 5 data per halaman
 
-        if ($user->role === 'teknisi') {
-            // Teknisi lihat semua komplain yg dia kirim
-            $complains = Complain::where('id_user', $user->id)->latest()->paginate(5);
-            return view('teknisi.komplain', compact('complains'));
-        }
-
-        if ($user->role === 'admin') {
-            // Admin lihat semua komplain (dari pelanggan & teknisi)
-            $complains = Complain::latest()->paginate(10);
-            return view('admin.komplain', compact('complains'));
-        }
+        return view('pelanggan.komplain', compact('complains'));
     }
 
+    // ✅ Simpan komplain dari pelanggan
 // Simpan komplain
 public function store(Request $request)
 {
@@ -80,8 +70,17 @@ public function store(Request $request)
     return back()->with('success', 'Pesan berhasil dikirim.');
 }
 
+    // ✅ Tampilkan daftar semua komplain untuk admin
+public function adminIndex()
+{
+    $complains = Complain::orderBy('created_at', 'desc')
+        ->paginate(5);
 
-    // ✅ Admin memberi tanggapan
+    return view('admin.komplain', compact('complains'));
+}
+
+
+    // ✅ Admin memberikan tanggapan
     public function tanggapi(Request $request, $id)
     {
         $request->validate([
@@ -92,6 +91,6 @@ public function store(Request $request)
         $complain->tanggapan = $request->tanggapan;
         $complain->save();
 
-        return back()->with('success', 'Tanggapan berhasil dikirim.');
+        return redirect()->route('admin.komplain')->with('success', 'Tanggapan berhasil dikirim.');
     }
 }
