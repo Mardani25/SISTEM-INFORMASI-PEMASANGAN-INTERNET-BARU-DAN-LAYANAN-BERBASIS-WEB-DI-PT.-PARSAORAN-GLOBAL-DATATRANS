@@ -48,6 +48,8 @@ Route::middleware(['auth', 'role:teknisi'])->prefix('teknisi')->group(function (
     Route::put('/jadwal/{id}/kehadiran', [TeknisiController::class, 'updateKehadiran'])->name('teknisi.updateKehadiran');
     Route::post('/upload-bukti/{id}', [TeknisiController::class, 'uploadBukti'])->name('teknisi.uploadBukti');
     Route::patch('/konfirmasi/{id}', [TeknisiController::class, 'konfirmasi'])->name('teknisi.konfirmasi');
+    Route::get('/teknisi/komplain', [ComplainController::class, 'index'])->name('teknisi.komplain');
+    Route::post('/teknisi/komplain', [ComplainController::class, 'store'])->name('teknisi.complain.store');
 });
 
 // Rute pelanggan
