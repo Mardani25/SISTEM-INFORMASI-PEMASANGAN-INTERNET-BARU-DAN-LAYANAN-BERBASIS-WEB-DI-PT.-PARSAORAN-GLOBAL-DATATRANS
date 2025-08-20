@@ -24,12 +24,7 @@
         </a>
       </li>
 
-          <li class="menu-item">
-      <a href="{{ route('teknisi.komplain') }}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-message-alt-error"></i>
-        <div data-i18n="Data Komplain">Data Komplain</div>
-      </a>
-    </li>
+
 <li class="menu-header small text-uppercase">
   <span class="menu-header-text">Pages</span>
 </li>
@@ -41,6 +36,12 @@
   </a>
 </li>
 
+    <li class="menu-item">
+      <a href="{{ route('teknisi.komplain') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-message-alt-error"></i>
+        <div data-i18n="Data Komplain">Data Komplain</div>
+      </a>
+    </li>
       </li>
     </ul>
   </aside>
