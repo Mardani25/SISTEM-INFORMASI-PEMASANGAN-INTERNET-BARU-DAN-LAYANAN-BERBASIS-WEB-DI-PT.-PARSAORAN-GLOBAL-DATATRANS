@@ -15,7 +15,7 @@
 </a>
 
 <div class="container mt-4">
-    <h2 class="text-primary">Komplain Teknisi ke Admin</h2>
+    <h2 class="text-primary">Kontrol Teknisi ke Admin</h2>
 
     <!-- Alert -->
     @if(session('success'))
@@ -36,7 +36,7 @@
     <!-- Daftar Komplain -->
     <h5>Riwayat Komplain</h5>
     @if($complains->isEmpty())
-        <p class="mt-2 text-muted">Belum ada komplain.</p>
+        <p class="mt-2 text-muted">Belum ada Pesan Kontrol.</p>
     @else
         <div class="table-responsive">
             <table class="table table-bordered align-middle">
