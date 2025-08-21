@@ -111,9 +111,9 @@
     </div>
 
     <!-- 🔥 Riwayat Komplain -->
-    <h5>Riwayat Komplain</h5>
+    <h5>Riwayat Pesan</h5>
     @if($complains->isEmpty())
-        <p class="text-muted">Belum ada komplain yang dikirim.</p>
+        <p class="text-muted">Belum ada Pesan yang dikirim.</p>
     @else
         <div class="table-responsive">
             <table class="table table-bordered align-middle">
