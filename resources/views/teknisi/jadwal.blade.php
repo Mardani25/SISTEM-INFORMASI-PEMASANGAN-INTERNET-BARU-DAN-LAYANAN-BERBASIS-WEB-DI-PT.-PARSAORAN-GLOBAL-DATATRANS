@@ -36,62 +36,80 @@
 @else
     <div class="table-responsive mb-5">
         <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th>Waktu</th>
-                    <th>Pelanggan</th>
-                    <th>Alamat</th>
-                    <th>Layanan</th>
-                    <th>Keterangan</th>
-                    <th>Status Kehadiran</th>
-                    <th>Foto Bukti</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($jadwals as $jadwal)
-                <tr>
-                    <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
-                    <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
-                    <td>{{ $jadwal->pemesanan->user->alamat ?? '-' }}</td>
-                    <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
-                    <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
-                    
-                    <!-- Status Kehadiran -->
-                    <td>
-                        <form action="{{ route('teknisi.updateKehadiran', $jadwal->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <select name="status_kehadiran" class="form-control form-control-sm" onchange="this.form.submit()">
-                                <option value="belum_hadir" {{ $jadwal->status_kehadiran == 'belum_hadir' ? 'selected' : '' }}>
-                                    Belum Hadir
-                                </option>
-                                <option value="hadir" {{ $jadwal->status_kehadiran == 'hadir' ? 'selected' : '' }}>
-                                    Hadir / Selesai
-                                </option>
-                            </select>
-                        </form>
-                    </td>
+    <thead class="thead-light">
+        <tr>
+            <th>Waktu</th>
+            <th>Pelanggan</th>
+            <th>Alamat</th>
+            <th>Layanan</th>
+            <th>Keterangan</th>
+            <th>Status Kehadiran</th>
+            <th>Foto Bukti</th>
+            <th>Pesan Kontrol</th> <!-- Tambahan kolom -->
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($jadwals as $jadwal)
+        <tr>
+            <td>{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}</td>
+            <td>{{ $jadwal->pemesanan->user->name ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->user->alamat ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->layanan->nama_layanan ?? '-' }}</td>
+            <td>{{ $jadwal->pemesanan->keterangan ?? '-' }}</td>
+            
+            <!-- Status Kehadiran -->
+            <td>
+                <form action="{{ route('teknisi.updateKehadiran', $jadwal->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <select name="status_kehadiran" class="form-control form-control-sm" onchange="this.form.submit()">
+                        <option value="belum_hadir" {{ $jadwal->status_kehadiran == 'belum_hadir' ? 'selected' : '' }}>
+                            Belum Hadir
+                        </option>
+                        <option value="hadir" {{ $jadwal->status_kehadiran == 'hadir' ? 'selected' : '' }}>
+                            Hadir / Selesai
+                        </option>
+                    </select>
+                </form>
+            </td>
 
-                    <!-- Upload/Lihat Bukti -->
-                    <td>
-                        @if ($jadwal->status_kehadiran == 'hadir' && !$jadwal->bukti_foto)
-                            <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-2">  
-                                    <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
-                                </div>
-                                <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
-                            </form>
-                        @elseif ($jadwal->bukti_foto)
-                            <a href="{{ asset('/storage/app/public/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">Lihat</a>
-                        @else
-                            <span class="text-muted">Belum ada</span>
-                        @endif
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>    
-        </table>
+            <!-- Upload/Lihat Bukti -->
+            <td>
+                @if ($jadwal->status_kehadiran == 'hadir' && !$jadwal->bukti_foto)
+                    <form action="{{ route('teknisi.uploadBukti', $jadwal->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-2">  
+                            <input type="file" name="bukti_foto" class="form-control form-control-sm" required>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Upload Foto</button>
+                    </form>
+                @elseif ($jadwal->bukti_foto)
+                    <a href="{{ asset('/storage/app/public/bukti_foto/' . $jadwal->bukti_foto) }}" target="_blank" class="btn btn-outline-info btn-sm">Lihat</a>
+                @else
+                    <span class="text-muted">Belum ada</span>
+                @endif
+            </td>
+
+            <!-- Pesan/Complain -->
+            <td>
+                <form action="{{ route('teknisi.kirimComplain', $jadwal->id) }}" method="POST">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" name="pesan" class="form-control form-control-sm" 
+                               value="{{ $jadwal->complain->pesan ?? '' }}" 
+                               placeholder="Tulis pesan...">
+                        <button class="btn btn-sm btn-success" type="submit">Kirim</button>
+                    </div>
+                    @if($jadwal->complain && $jadwal->complain->tanggapan)
+                        <small class="text-muted">Tanggapan: {{ $jadwal->complain->tanggapan }}</small>
+                    @endif
+                </form>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>    
+</table>
+
     </div>
 
     <!-- 🔥 Form Komplain -->
