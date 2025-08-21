@@ -27,8 +27,14 @@ public function lihatJadwal(Request $request)
         ->orderBy('waktu', 'asc')
         ->paginate(10);
 
-    return view('teknisi.jadwal', compact('jadwals', 'tanggal'));
+    // 🔥 ambil riwayat komplain teknisi yang login
+    $complains = \App\Models\Complain::where('id_user', Auth::id())
+        ->orderByDesc('created_at')
+        ->paginate(5);
+
+    return view('teknisi.jadwal', compact('jadwals', 'tanggal', 'complains'));
 }
+
 
 
     // Menampilkan detail pemesanan
