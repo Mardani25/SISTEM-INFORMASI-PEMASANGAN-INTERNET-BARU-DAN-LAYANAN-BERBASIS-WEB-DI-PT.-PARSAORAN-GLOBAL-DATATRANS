@@ -94,21 +94,22 @@
         </table>
     </div>
 
-    <!-- 🔥 Form Komplain -->
-    <div class="card mb-4">
-        <div class="card-header bg-warning text-white">
-            Kirim Komplain / Pesan ke Admin
-        </div>
-        <div class="card-body">
-            <form action="{{ route('teknisi.complain.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <textarea name="pesan" class="form-control" rows="3" placeholder="Tuliskan pesan atau komplain..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-warning">Kirim</button>
-            </form>
-        </div>
+<!-- 🔥 Form Komplain -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        Kirim Pesan ke Admin
     </div>
+    <div class="card-body">
+        <form action="{{ route('teknisi.complain.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <textarea name="pesan" class="form-control" rows="3" placeholder="Tuliskan pesan atau komplain..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Kirim</button>
+        </form>
+    </div>
+</div>
+
 
     <!-- 🔥 Riwayat Komplain -->
     <h5>Riwayat Pesan</h5>
